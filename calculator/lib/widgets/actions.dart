@@ -139,7 +139,10 @@ class ActionButton extends StatelessWidget {
         onPressed: () {
           action(label);
         },
-        child: Text(label),
+        child: Text(
+          label,
+          style: const TextStyle(fontSize: 24),
+        ),
       ),
     );
   }

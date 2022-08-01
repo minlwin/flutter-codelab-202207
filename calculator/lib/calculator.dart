@@ -12,6 +12,9 @@ class Calculator extends StatefulWidget {
 
 class _CalculatorState extends State<Calculator> {
   String value = "0";
+  double current = 0;
+  String operator = "";
+  bool done = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +74,9 @@ class _CalculatorState extends State<Calculator> {
   void clear() {
     setState(() {
       value = "0";
+      current = 0;
+      operator = "";
+      done = false;
     });
   }
 
@@ -86,21 +92,77 @@ class _CalculatorState extends State<Calculator> {
     }
   }
 
-  void doPersent() {}
+  void doPersent() {
+    setState(() {
+      _evaluate();
+      current = current / 100;
+      _showResult();
+    });
+  }
 
-  void doDecimal() {}
+  void doDecimal() {
+    if (!value.contains(".")) {
+      setState(() {
+        value = "$value.";
+      });
+    }
+  }
 
-  void calculate() {}
+  void calculate() {
+    setState(() {
+      _evaluate();
+      _showResult();
+    });
+  }
 
-  void pressOperator(String ope) {}
+  void pressOperator(String ope) {
+    setState(() {
+      _evaluate();
+      operator = ope;
+      value = "0";
+    });
+  }
 
   void pressNumber(String num) {
     setState(() {
-      if ("0" == value) {
+      if ("0" == value || done) {
         value = num;
       } else {
         value = value + num;
       }
+      done = false;
     });
+  }
+
+  void _evaluate() {
+    var input = double.parse(value);
+    switch (operator) {
+      case "+":
+        current += input;
+        break;
+      case "-":
+        current -= input;
+        break;
+      case "*":
+        current *= input;
+        break;
+      case "/":
+        current /= input;
+        break;
+      default:
+        current = input;
+        break;
+    }
+  }
+
+  void _showResult() {
+    if (current.toInt().toDouble() == current) {
+      value = current.toInt().toString();
+    } else {
+      value = current.toString();
+    }
+    current = 0;
+    operator = "";
+    done = true;
   }
 }
