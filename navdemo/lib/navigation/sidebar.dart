@@ -16,21 +16,21 @@ class SideBar extends StatelessWidget {
           leading: const Icon(Icons.list),
           title: const Text("List Demo"),
           onTap: () {
-            Navigator.pushNamed(context, "/list");
+            Navigator.of(context).pushReplacementNamed("/list");
           },
         ),
         ListTile(
           leading: const Icon(Icons.grid_3x3),
           title: const Text("Grid Demo"),
           onTap: () {
-            Navigator.pushNamed(context, "/grid");
+            Navigator.of(context).pushReplacementNamed("/grid");
           },
         ),
         ListTile(
           leading: const Icon(Icons.image),
           title: const Text("Image Demo"),
           onTap: () {
-            Navigator.pushNamed(context, "/image");
+            Navigator.of(context).pushReplacementNamed("/image");
           },
         ),
       ],
