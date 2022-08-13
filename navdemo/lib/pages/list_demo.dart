@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:navdemo/navigation/sidebar.dart';
 import 'package:navdemo/states/divisions.dart';
 
-class ListDemo extends StatelessWidget {
+class ListDemo extends StatefulWidget {
   const ListDemo({Key? key}) : super(key: key);
 
+  @override
+  State<ListDemo> createState() => _ListDemoState();
+}
+
+class _ListDemoState extends State<ListDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +18,8 @@ class ListDemo extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              _loadInputDialog(context);
+              await _loadInputDialog(context);
+              setState(() {});
             },
             icon: const Icon(Icons.add),
             padding: const EdgeInsets.only(right: 8),
@@ -21,7 +27,20 @@ class ListDemo extends StatelessWidget {
         ],
       ),
       drawer: const Drawer(child: SideBar()),
-      body: Container(),
+      body: Container(
+        padding: const EdgeInsets.all(8),
+        alignment: Alignment.topCenter,
+        child: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+            leading: CircleAvatar(
+              child: Text(Divisions.instance.list[index].id.toString()),
+            ),
+            title: Text(Divisions.instance.list[index].name),
+          ),
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: Divisions.instance.list.length,
+        ),
+      ),
     );
   }
 
@@ -47,7 +66,7 @@ class ListDemo extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Divisions.of().add(controller.text);
+              Divisions.instance.add(controller.text);
               Navigator.of(context).pop();
             },
             child: const Text("Save"),

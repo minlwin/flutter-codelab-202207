@@ -1,19 +1,23 @@
-import 'dart:ffi';
-
 class Divisions {
   Divisions._();
-
-  static Divisions of() {
-    return _instance;
-  }
-
   static final Divisions _instance = Divisions._();
 
-  final List<String> _list = List.empty(growable: true);
+  static Divisions get instance => _instance;
 
-  get list => List.of(_list);
+  int _id = 0;
+
+  final List<Division> _list = <Division>[];
+
+  List<Division> get list => List.of(_list);
 
   add(String division) {
-    _list.add(division);
+    _list.add(Division(++_id, division));
   }
+}
+
+class Division {
+  final int id;
+  final String name;
+
+  Division(this.id, this.name);
 }
