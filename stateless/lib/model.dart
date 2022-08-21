@@ -25,6 +25,20 @@ class Person {
   });
 }
 
+extension PersonalInfoExtension on Person {
+  Map<String, String> get personalInfo {
+    return {
+      "Name": name,
+      "Role": role,
+      "Phone": phone,
+    };
+  }
+
+  List<MapEntry<String, String>> get personalInfoList {
+    return personalInfo.entries.toList();
+  }
+}
+
 class Address {
   final String address;
   final String street;

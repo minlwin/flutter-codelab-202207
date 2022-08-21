@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stateless/model.dart';
+import 'package:stateless/personal.info.widget.dart';
 
 class UserWidget extends StatelessWidget {
   final Person user;
@@ -12,9 +13,7 @@ class UserWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          NamedLabel(title: "Name", value: user.name),
-          NamedLabel(title: "Role", value: user.role),
-          NamedLabel(title: "Phone", value: user.phone),
+          PersonalInfo(user),
         ],
       ),
     );
