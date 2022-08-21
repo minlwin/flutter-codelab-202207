@@ -12,10 +12,22 @@ class PersonalInfo extends StatelessWidget {
       alignment: Alignment.topLeft,
       width: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Personal Info",
-            style: Theme.of(context).textTheme.headline4,
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 8),
+                child: Icon(
+                  Icons.person,
+                  size: 36,
+                ),
+              ),
+              Text(
+                "Personal Info",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
           ),
           ListView.builder(
             padding: const EdgeInsets.only(top: 16),

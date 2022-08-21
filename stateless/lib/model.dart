@@ -5,7 +5,7 @@ class DataModel {
         role: "Member",
         address: Address(
           address: "120 / 3F",
-          street: "Yadana Myaing Street",
+          street: "Yadana Myaing New Street",
           township: "Kamayut",
         ),
       );
