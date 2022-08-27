@@ -23,18 +23,39 @@ class _CounterAppState extends State<CounterApp> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CounterSate(count, child: const CounterView()),
-            OutlinedButton(
-              onPressed: countUp,
-              child: const Text("Count Up"),
+            CounterSate(
+              count,
+              child: const Padding(
+                padding: EdgeInsets.only(bottom: 24),
+                child: CounterView(),
+              ),
             ),
-            OutlinedButton(
-              onPressed: reset,
-              child: const Text("Reset"),
+            Container(
+              padding: const EdgeInsets.only(bottom: 16),
+              width: 300,
+              height: 60,
+              child: OutlinedButton(
+                onPressed: countUp,
+                child: const Text("Count Up"),
+              ),
             ),
-            OutlinedButton(
-              onPressed: countDown,
-              child: const Text("Count Down"),
+            Container(
+              padding: const EdgeInsets.only(bottom: 16),
+              width: 300,
+              height: 60,
+              child: OutlinedButton(
+                onPressed: reset,
+                child: const Text("Reset"),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(bottom: 16),
+              width: 300,
+              height: 60,
+              child: OutlinedButton(
+                onPressed: countDown,
+                child: const Text("Count Down"),
+              ),
             ),
           ],
         ),
