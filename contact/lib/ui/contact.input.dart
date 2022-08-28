@@ -18,6 +18,7 @@ class ContactInput extends StatelessWidget {
           TextFormField(
             controller: _nameInput,
             decoration: const InputDecoration(
+              icon: Icon(Icons.person),
               label: Text("Name"),
             ),
             validator: (value) => _notEmpty("Name", value),
@@ -27,6 +28,7 @@ class ContactInput extends StatelessWidget {
             controller: _phoneInput,
             keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
+              icon: Icon(Icons.phone),
               label: Text("Phone"),
             ),
             validator: (value) => _notEmpty("Phone Number", value),
