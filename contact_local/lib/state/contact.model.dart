@@ -26,8 +26,7 @@ class ContactModel with ChangeNotifier {
 
   Future<List<Contact>> get items async {
     if (await _storage.ready) {
-      var storageData = _storage.getItem(data);
-      return List.from(storageData);
+      return List.from(_storage.getItem(data));
     }
 
     return List.empty(growable: true);

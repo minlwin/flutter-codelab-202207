@@ -24,7 +24,6 @@ class Contact {
       return List.empty(growable: true);
     }
 
-    List<Map<String, dynamic>> list = jsonDecode(data);
-    return List.from(list.map((e) => Contact.fromMap(e)));
+    return List.from(jsonDecode(data).map((e) => Contact.fromMap(e)));
   }
 }
