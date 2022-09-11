@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Contact {
   String name;
   String phone;
@@ -19,11 +17,11 @@ class Contact {
         "email": email,
       };
 
-  static List<Contact> read(String? data) {
+  static List<Contact> read(dynamic data) {
     if (data == null) {
       return List.empty(growable: true);
     }
 
-    return List.from(jsonDecode(data).map((e) => Contact.fromMap(e)));
+    return List.from(data.map((e) => Contact.fromMap(e)));
   }
 }

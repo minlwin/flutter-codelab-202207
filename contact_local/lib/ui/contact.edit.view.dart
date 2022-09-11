@@ -7,10 +7,16 @@ class ContactEditView extends StatelessWidget {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
 
-  ContactEditView({super.key});
+  final Contact? contact;
+
+  ContactEditView({super.key, this.contact});
 
   @override
   Widget build(BuildContext context) {
+    _nameController.text = contact?.name ?? '';
+    _phoneController.text = contact?.phone ?? '';
+    _emailController.text = contact?.email ?? '';
+
     return Scaffold(
       appBar: AppBar(title: const Text("Edit Contact")),
       resizeToAvoidBottomInset: false,
