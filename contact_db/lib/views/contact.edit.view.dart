@@ -49,7 +49,7 @@ class ContactEditBody extends StatelessWidget {
             ),
             _input(
               icon: Icons.email,
-              name: "Phone",
+              name: "Email",
               controller: emailInput,
               inputType: TextInputType.emailAddress,
             ),

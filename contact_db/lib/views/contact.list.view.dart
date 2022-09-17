@@ -73,14 +73,11 @@ class ContactListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListTile(
-          leading: const CircleAvatar(child: Icon(Icons.person)),
-          title: Text(dto.name),
-          subtitle: Text("${dto.phone}\n${dto.email}"),
-          isThreeLine: true,
-        ),
+      child: ListTile(
+        leading: const CircleAvatar(child: Icon(Icons.person)),
+        title: Text(dto.name),
+        subtitle: Text("${dto.phone}\n${dto.email}"),
+        isThreeLine: true,
       ),
     );
   }

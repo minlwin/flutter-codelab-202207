@@ -19,7 +19,6 @@ class ContactDto {
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id,
         "name": name,
         "phone": phone,
         "email": email,

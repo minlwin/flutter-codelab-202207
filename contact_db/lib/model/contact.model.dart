@@ -7,11 +7,20 @@ class ContactModel with ChangeNotifier {
   final tableName = 'contact';
   Future<void> save(ContactDto dto) async {
     final db = await ContactDb.instance.database;
-    await db.insert(
-      tableName,
-      dto.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    if (dto.id == 0) {
+      await db.insert(
+        tableName,
+        dto.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } else {
+      await db.update(
+        tableName,
+        dto.toMap(),
+        where: "id: ?",
+        whereArgs: [dto.id],
+      );
+    }
     notifyListeners();
   }
 
