@@ -33,18 +33,18 @@ class ContactEditBody extends StatelessWidget {
         child: Column(
           children: [
             _input(
-              icon: const Icon(Icons.person),
+              icon: Icons.person,
               name: "Name",
               controller: nameInput,
             ),
             _input(
-              icon: const Icon(Icons.phone),
+              icon: Icons.phone,
               name: "Phone",
               controller: phoneInput,
               inputType: TextInputType.phone,
             ),
             _input(
-              icon: const Icon(Icons.email),
+              icon: Icons.email,
               name: "Phone",
               controller: emailInput,
               inputType: TextInputType.emailAddress,
@@ -69,7 +69,7 @@ class ContactEditBody extends StatelessWidget {
   }
 
   Widget _input({
-    required Icon icon,
+    required IconData icon,
     required String name,
     required TextEditingController controller,
     TextInputType inputType = TextInputType.name,
@@ -80,7 +80,7 @@ class ContactEditBody extends StatelessWidget {
           controller: controller,
           decoration: InputDecoration(
             labelText: name,
-            icon: icon,
+            icon: Icon(icon),
           ),
           keyboardType: inputType,
           validator: (value) {
