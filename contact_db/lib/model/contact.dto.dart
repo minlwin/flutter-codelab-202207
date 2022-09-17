@@ -10,4 +10,18 @@ class ContactDto {
     required this.phone,
     required this.email,
   });
+
+  factory ContactDto.from(Map<String, dynamic> map) => ContactDto(
+        id: map['id'],
+        name: map['name'],
+        phone: map['phone'],
+        email: map['email'],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "name": name,
+        "phone": phone,
+        "email": email,
+      };
 }

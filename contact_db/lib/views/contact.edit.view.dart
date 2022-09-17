@@ -1,4 +1,8 @@
+import 'package:contact_db/model/contact.dto.dart';
+import 'package:contact_db/model/contact.model.dart';
+import 'package:contact_db/views/contact.list.view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactEditView extends StatelessWidget {
   const ContactEditView({super.key});
@@ -54,8 +58,14 @@ class ContactEditBody extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {}
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      var model = context.read<ContactModel>();
+                      model.save(_getData());
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => const ContactListView(),
+                      ));
+                    }
                   },
                   icon: const Icon(Icons.save),
                   label: const Text("Save"),
@@ -65,6 +75,14 @@ class ContactEditBody extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  _getData() {
+    return ContactDto(
+      name: nameInput.text,
+      phone: phoneInput.text,
+      email: emailInput.text,
     );
   }
 
