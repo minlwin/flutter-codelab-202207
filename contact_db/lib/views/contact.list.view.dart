@@ -73,12 +73,81 @@ class ContactListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        leading: const CircleAvatar(child: Icon(Icons.person)),
-        title: Text(dto.name),
-        subtitle: Text("${dto.phone}\n${dto.email}"),
-        isThreeLine: true,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8),
+        child: ListTile(
+          leading: const CircleAvatar(child: Icon(Icons.person)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(dto.name),
+              _getActions(context),
+            ],
+          ),
+          subtitle: Text("${dto.phone}\n${dto.email}"),
+          isThreeLine: true,
+        ),
       ),
     );
+  }
+
+  Widget _getActions(BuildContext context) => PopupMenuButton(
+        padding: const EdgeInsets.all(0),
+        icon: const Icon(Icons.more_vert),
+        itemBuilder: (context) => [
+          const PopupMenuItem(
+            value: 1,
+            child: Text("Edit"),
+          ),
+          const PopupMenuItem(
+            value: 2,
+            child: Text("Delete"),
+          )
+        ],
+        onSelected: (value) => _handle(value, context),
+      );
+
+  _handle(int value, BuildContext context) {
+    switch (value) {
+      case 1:
+        _edit(context);
+        break;
+      case 2:
+        _delete(context);
+        break;
+      default:
+        break;
+    }
+  }
+
+  _edit(BuildContext context) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => ContactEditView(
+        dto: dto,
+      ),
+    ));
+  }
+
+  _delete(BuildContext context) async {
+    final model = context.read<ContactModel>();
+    var result = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete Confirmation"),
+        content: Text("Do you want to delete ${dto.name}."),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text("Cancel")),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text("Delete")),
+        ],
+      ),
+    );
+
+    if (result) {
+      model.delete(dto.id);
+    }
   }
 }

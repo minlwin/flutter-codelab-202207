@@ -5,31 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ContactEditView extends StatelessWidget {
-  const ContactEditView({super.key});
+  final ContactDto? dto;
+  const ContactEditView({super.key, this.dto});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.person_add),
-        title: const Text("Edit Contact"),
+        title: Text(_title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.people),
+            onPressed: () =>
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const ContactListView(),
+            )),
+          )
+        ],
       ),
-      body: ContactEditBody(),
+      body: ContactEditBody(dto: dto ?? ContactDto()),
       resizeToAvoidBottomInset: false,
     );
   }
+
+  String get _title => null == dto ? 'Add New Contact' : 'Edit Contact';
 }
 
 class ContactEditBody extends StatelessWidget {
+  final ContactDto dto;
   final formKey = GlobalKey<FormState>();
   final nameInput = TextEditingController();
   final phoneInput = TextEditingController();
   final emailInput = TextEditingController();
 
-  ContactEditBody({super.key});
+  ContactEditBody({super.key, required this.dto});
 
   @override
   Widget build(BuildContext context) {
+    nameInput.text = dto.name;
+    phoneInput.text = dto.phone;
+    emailInput.text = dto.email;
     return Form(
       key: formKey,
       child: Padding(
@@ -58,17 +74,9 @@ class ContactEditBody extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      var model = context.read<ContactModel>();
-                      model.save(_getData());
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => const ContactListView(),
-                      ));
-                    }
-                  },
                   icon: const Icon(Icons.save),
                   label: const Text("Save"),
+                  onPressed: () => _save(context),
                 ),
               ),
             )
@@ -78,12 +86,19 @@ class ContactEditBody extends StatelessWidget {
     );
   }
 
-  _getData() {
-    return ContactDto(
-      name: nameInput.text,
-      phone: phoneInput.text,
-      email: emailInput.text,
-    );
+  _save(BuildContext context) {
+    // Set Dto with Inputs
+    dto.name = nameInput.text;
+    dto.phone = phoneInput.text;
+    dto.email = emailInput.text;
+
+    // Save Dto
+    context.read<ContactModel>().save(dto);
+
+    // Navigate to List View
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const ContactListView(),
+    ));
   }
 
   Widget _input({

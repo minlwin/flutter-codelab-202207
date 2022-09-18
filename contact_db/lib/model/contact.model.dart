@@ -5,6 +5,7 @@ import 'package:sqflite/sql.dart';
 
 class ContactModel with ChangeNotifier {
   final tableName = 'contact';
+
   Future<void> save(ContactDto dto) async {
     final db = await ContactDb.instance.database;
     if (dto.id == 0) {
@@ -17,7 +18,7 @@ class ContactModel with ChangeNotifier {
       await db.update(
         tableName,
         dto.toMap(),
-        where: "id: ?",
+        where: "id = ?",
         whereArgs: [dto.id],
       );
     }

@@ -6,9 +6,9 @@ class ContactDto {
 
   ContactDto({
     this.id = 0,
-    required this.name,
-    required this.phone,
-    required this.email,
+    this.name = "",
+    this.phone = "",
+    this.email = "",
   });
 
   factory ContactDto.from(Map<String, dynamic> map) => ContactDto(
