@@ -5,6 +5,7 @@ const categoryTable = """
     id integer PRIMARY KEY AUTOINCREMENT,
     name varchar(20) not null,
     color integer,
+    text_color integer,
     credit integer default 1
   )""";
 
@@ -14,7 +15,7 @@ const balanceTable = """
     category_id integer,
     create_at integer,
     remark text,
-    foreign key (category_id) reference category(id)
+    foreign key (category_id) references category(id)
   )""";
 
 const detailsTable = """
@@ -23,7 +24,7 @@ const detailsTable = """
     balance_id integer,
     quentity ineteger,
     unit_price integer,
-    foreign key (balance_id) reference balance(id)
+    foreign key (balance_id) references balance(id)
   )""";
 
 class BalanceDb {
@@ -40,6 +41,7 @@ class BalanceDb {
   Future<Database> _open() async {
     return await openDatabase(
       "${getDatabasesPath()}/$dbPath",
+      version: version,
       onCreate: (db, version) {
         db.execute(categoryTable);
         db.execute(balanceTable);

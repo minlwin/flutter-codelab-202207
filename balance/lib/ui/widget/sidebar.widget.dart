@@ -9,28 +9,33 @@ class Sidebar extends StatelessWidget {
     return Drawer(
       child: Column(children: [
         const UserAccountsDrawerHeader(
-          currentAccountPicture: Icon(
-            Icons.wallet,
-            color: Colors.white,
-            size: 64,
+          currentAccountPicture: CircleAvatar(
+            child: Icon(
+              Icons.bar_chart,
+              color: Colors.white,
+              size: 42,
+            ),
           ),
           accountName: Text("My Balance"),
           accountEmail: Text("Java Developer Class"),
         ),
-        Expanded(
-          child: ListView(
-            children: [
-              _menuItem(context, "Home", routeHome),
-              _menuItem(context, "Credits", routeCredits),
-              _menuItem(context, "Debits", routeDebits),
-            ],
-          ),
+        Column(
+          children: [
+            _menuItem(context, "Home", routeHome, Icons.home_outlined),
+            _menuItem(context, "Credits", routeCredits, Icons.arrow_upward),
+            _menuItem(context, "Debits", routeDebits, Icons.arrow_downward),
+            _menuItem(context, "Categories", routeCategories, Icons.attachment),
+            _menuItem(context, "Settings", routeSettings, Icons.manage_history),
+          ],
         )
       ]),
     );
   }
 
-  Widget _menuItem(BuildContext context, String name, String route) => ListTile(
+  Widget _menuItem(
+          BuildContext context, String name, String route, IconData icons) =>
+      ListTile(
+        leading: Icon(icons),
         title: Text(name),
         onTap: () => Navigator.of(context).pushReplacementNamed(route),
       );
