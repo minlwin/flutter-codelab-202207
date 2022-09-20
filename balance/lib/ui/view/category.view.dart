@@ -1,6 +1,6 @@
 import 'package:balance/app/routes.dart';
 import 'package:balance/model/dto/category.dto.dart';
-import 'package:balance/model/states/category.state.dart';
+import 'package:balance/model/states/category.model.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:balance/ui/widget/sidebar.widget.dart';
@@ -26,7 +26,7 @@ class CagtegoryView extends StatelessWidget {
         ],
       ),
       body: FutureBuilder(
-        future: context.watch<CategoryState>().getAll(),
+        future: context.watch<CategoryModel>().getAll(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const AppError();

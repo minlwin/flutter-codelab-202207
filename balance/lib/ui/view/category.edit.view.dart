@@ -1,6 +1,6 @@
 import 'package:balance/model/dto/category.dto.dart';
 import 'package:balance/model/states/category.edit.state.dart';
-import 'package:balance/model/states/category.state.dart';
+import 'package:balance/model/states/category.model.dart';
 import 'package:balance/ui/widget/color.picker.widget.dart';
 import 'package:balance/ui/widget/sub.view.dart';
 import 'package:balance/ui/widget/switch.form.field.dart';
@@ -98,7 +98,7 @@ class CategoryEditBody extends StatelessWidget {
                                 name: nameController.text,
                                 id: dto?.id ?? 0,
                               );
-                      context.read<CategoryState>().save(target);
+                      context.read<CategoryModel>().save(target);
                       Navigator.of(context).pop();
                     }
                   },

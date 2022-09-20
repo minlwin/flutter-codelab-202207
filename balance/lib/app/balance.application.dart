@@ -1,5 +1,6 @@
 import 'package:balance/app/routes.dart';
-import 'package:balance/model/states/category.state.dart';
+import 'package:balance/model/states/balance.model.dart';
+import 'package:balance/model/states/category.model.dart';
 import 'package:balance/ui/view/balance.edit.view.dart';
 import 'package:balance/ui/view/balance.list.view.dart';
 import 'package:balance/ui/view/category.edit.view.dart';
@@ -17,8 +18,11 @@ class BalanceApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => CategoryState(),
+          create: (context) => CategoryModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => BalanceModel(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

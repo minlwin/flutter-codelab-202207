@@ -6,6 +6,22 @@ class AppError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      alignment: Alignment.center,
+      child: Column(children: [
+        Text(
+          "Error",
+          style: Theme.of(context).textTheme.headline4,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: Icon(
+            Icons.warning,
+            size: 60,
+          ),
+        ),
+        Text(message ?? "Something is going wrong!")
+      ]),
+    );
   }
 }

@@ -2,7 +2,7 @@ import 'package:balance/model/db/balance.db.dart';
 import 'package:balance/model/dto/category.dto.dart';
 import 'package:flutter/material.dart';
 
-class CategoryState with ChangeNotifier {
+class CategoryModel with ChangeNotifier {
   Future save(Category dto) async {
     final db = await BalanceDb.instance.database;
     if (dto.id == 0) {

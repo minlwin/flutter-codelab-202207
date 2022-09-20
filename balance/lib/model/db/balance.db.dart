@@ -19,11 +19,11 @@ const balanceTable = """
   )""";
 
 const detailsTable = """
-  carete table details (
+  create table details (
     id integer PRIMARY KEY AUTOINCREMENT,
     balance_id integer,
-    quentity ineteger,
-    unit_price integer,
+    item varchar(40),
+    amount integer,
     foreign key (balance_id) references balance(id)
   )""";
 
