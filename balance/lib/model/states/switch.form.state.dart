@@ -8,6 +8,12 @@ class SwitchFormState with ChangeNotifier {
   final String onLabel;
   final String offLabel;
 
+  factory SwitchFormState.generate(bool? state, String on, String off) {
+    final switchFormState = SwitchFormState(offLabel: off, onLabel: on);
+    switchFormState._state = state ?? true;
+    return switchFormState;
+  }
+
   SwitchFormState({required this.onLabel, required this.offLabel});
 
   set state(bool state) {

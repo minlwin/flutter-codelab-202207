@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ColorPicker extends StatelessWidget {
+  final Color? color;
   final OnValueChange<Color> onValueChange;
-  const ColorPicker({super.key, required this.onValueChange});
+  const ColorPicker({super.key, required this.onValueChange, this.color});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ColorPickerState(),
+      create: (context) => ColorPickerState.generate(color),
       child: ColorPickerBody(onValueChange),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:balance/app/routes.dart';
 import 'package:balance/model/states/balance.model.dart';
 import 'package:balance/model/states/category.model.dart';
-import 'package:balance/ui/view/balance.edit.view.dart';
-import 'package:balance/ui/view/balance.list.view.dart';
-import 'package:balance/ui/view/category.edit.view.dart';
-import 'package:balance/ui/view/category.view.dart';
+import 'package:balance/ui/view/balances/balance.list.view.dart';
+import 'package:balance/ui/view/balances/balance_edit/balance.edit.dart';
+import 'package:balance/ui/view/categories/category.edit.view.dart';
+import 'package:balance/ui/view/categories/category.view.dart';
 import 'package:balance/ui/view/home.view.dart';
 import 'package:balance/ui/view/settings.view.dart';
 import 'package:flutter/material.dart';

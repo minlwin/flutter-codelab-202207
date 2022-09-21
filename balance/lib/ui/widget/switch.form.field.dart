@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SwitchFormField extends StatelessWidget {
+  final bool? state;
   final OnValueChange<bool> onValueChange;
   final String onLabel;
   final String offLabel;
@@ -11,13 +12,13 @@ class SwitchFormField extends StatelessWidget {
       {super.key,
       required this.onLabel,
       required this.offLabel,
-      required this.onValueChange});
+      required this.onValueChange,
+      this.state});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) =>
-          SwitchFormState(onLabel: onLabel, offLabel: offLabel),
+      create: (context) => SwitchFormState.generate(state, onLabel, offLabel),
       child: SwitchFormFieldBody(
         onValueChange: onValueChange,
       ),

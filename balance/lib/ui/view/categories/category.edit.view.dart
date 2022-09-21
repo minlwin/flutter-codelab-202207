@@ -66,6 +66,7 @@ class CategoryEditBody extends StatelessWidget {
               ),
             ),
             SwitchFormField(
+              state: dto?.credit,
               onLabel: "Credit",
               offLabel: "Debit",
               onValueChange: (value) {
@@ -81,6 +82,7 @@ class CategoryEditBody extends StatelessWidget {
             ),
             Expanded(
               child: ColorPicker(
+                color: dto?.color,
                 onValueChange: (color) {
                   context.read<CategoryEditState>().color = color;
                 },
