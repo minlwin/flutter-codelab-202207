@@ -96,10 +96,8 @@ class DetailsEditControls extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().page = 1;
-                },
-                child: const Text("Details Items"),
+                onPressed: onSave,
+                child: const Text("Save"),
               ),
             ),
           ),
@@ -107,8 +105,10 @@ class DetailsEditControls extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: onSave,
-                child: const Text("Save"),
+                onPressed: () {
+                  context.read<NestedPagerState>().page = 1;
+                },
+                child: const Text("Details Items"),
               ),
             ),
           ),

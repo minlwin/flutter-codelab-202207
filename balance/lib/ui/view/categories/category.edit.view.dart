@@ -15,7 +15,7 @@ class CategoryEditView extends StatelessWidget {
     final dto = ModalRoute.of(context)?.settings.arguments as Category?;
 
     return Provider(
-      create: (context) => CategoryEditState(),
+      create: (context) => CategoryEditState.create(dto),
       child: SubView(
         title: "${dto != null ? 'Edit' : 'Add New'} Category",
         child: CategoryEditBody(

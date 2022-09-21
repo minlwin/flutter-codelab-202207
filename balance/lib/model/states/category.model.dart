@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:balance/model/db/balance.db.dart';
 import 'package:balance/model/dto/category.dto.dart';
 import 'package:flutter/material.dart';
 
 class CategoryModel with ChangeNotifier {
   Future save(Category dto) async {
+    log(dto.toString());
     final db = await BalanceDb.instance.database;
     if (dto.id == 0) {
       await db.insert("category", dto.toMap());
