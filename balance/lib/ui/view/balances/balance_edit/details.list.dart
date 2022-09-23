@@ -54,8 +54,10 @@ class DetailsListControls extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {},
-                child: const Text("Save"),
+                onPressed: () {
+                  context.read<NestedPagerState>().page = 3;
+                },
+                child: const Text("Confirm"),
               ),
             ),
           ),

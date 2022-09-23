@@ -1,5 +1,7 @@
+import 'package:balance/model/dto/balance.details.dto.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
+import 'package:balance/ui/view/balances/balance_edit/balance.confirm.dart';
 import 'package:balance/ui/view/balances/balance_edit/category.select.dart';
 import 'package:balance/ui/view/balances/balance_edit/details.edit.dart';
 import 'package:balance/ui/view/balances/balance_edit/details.list.dart';
@@ -13,6 +15,8 @@ class BalanceEditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dto =
+        ModalRoute.of(context)?.settings.arguments as BalanceWidthDetails?;
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -24,8 +28,12 @@ class BalanceEditView extends StatelessWidget {
                     "Select Category",
                     "Balance Items",
                     "Add Item",
+                    "Confirm",
                   ])),
-          ChangeNotifierProvider(create: (context) => BalanceEditState(credit)),
+          ChangeNotifierProvider(
+              create: (context) => dto == null
+                  ? BalanceEditState.forAddNew(credit)
+                  : BalanceEditState.forEdit(dto)),
         ],
         child: const BalanceEditBody(),
       ),
@@ -59,10 +67,15 @@ class BalanceEditBody extends StatelessWidget {
       return const CategorySelect();
     }
 
+    if (page == 1) {
+      return const DetailsList();
+    }
+
     if (page == 2) {
       return DetailsEdit();
     }
-    return const DetailsList();
+
+    return BalanceConfirm();
   }
 }
 

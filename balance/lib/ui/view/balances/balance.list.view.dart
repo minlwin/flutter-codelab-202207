@@ -9,6 +9,8 @@ import 'package:balance/ui/widget/sidebar.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../extensions.dart';
+
 class BalanceList extends StatelessWidget {
   final bool credit;
   const BalanceList({super.key, required this.credit});
@@ -152,9 +154,9 @@ class BalanceListItem extends StatelessWidget {
       title: Text(dto.remark),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Text("Date"),
-          Text("Amount"),
+        children: [
+          Text(dto.createAt!.label),
+          Text(dto.total.mmk),
         ],
       ),
     );

@@ -16,7 +16,7 @@ class DetailsEdit extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            padding: const EdgeInsets.all(8),
             child: Form(
               key: formKey,
               child: Column(

@@ -31,7 +31,7 @@ class BalanceModel with ChangeNotifier {
         await txn.insert("details", item.toMap());
       }
     });
-
+    notifyListeners();
     return balance.id;
   }
 
@@ -51,7 +51,7 @@ class BalanceModel with ChangeNotifier {
     return Balance.list(result);
   }
 
-  Future<BalanceDetails?> findById(int id) async {
+  Future<BalanceWidthDetails?> findById(int id) async {
     final db = await BalanceDb.instance.database;
     final result = await db.query(
       table,
@@ -71,7 +71,7 @@ class BalanceModel with ChangeNotifier {
         whereArgs: [id],
       );
 
-      return BalanceDetails(
+      return BalanceWidthDetails(
           balance: balance, details: Details.list(detailsForBalance));
     }
 

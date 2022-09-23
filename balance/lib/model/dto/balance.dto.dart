@@ -18,7 +18,9 @@ class Balance {
 
   factory Balance.from(Map<String, dynamic> map) => Balance(
       id: map['balance_id'],
-      createAt: map['create_at'] != null ? DateTime(map['create_at']) : null,
+      createAt: map['create_at'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['create_at'])
+          : null,
       remark: map['remark'],
       total: map['total'] ?? 0,
       category: Category(
