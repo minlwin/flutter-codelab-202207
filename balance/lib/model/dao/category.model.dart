@@ -2,9 +2,12 @@ import 'dart:developer';
 
 import 'package:balance/model/db/balance.db.dart';
 import 'package:balance/model/dto/category.dto.dart';
-import 'package:flutter/material.dart';
 
-class CategoryModel with ChangeNotifier {
+class CategoryModel {
+  CategoryModel._();
+
+  static CategoryModel instance = CategoryModel._();
+
   Future save(Category dto) async {
     log(dto.toString());
     final db = await BalanceDb.instance.database;
@@ -14,7 +17,6 @@ class CategoryModel with ChangeNotifier {
       await db.update("category", dto.toMap(),
           where: "id = ?", whereArgs: [dto.id]);
     }
-    notifyListeners();
   }
 
   Future<List<Category>> getAll() async {

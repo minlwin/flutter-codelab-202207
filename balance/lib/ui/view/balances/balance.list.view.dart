@@ -1,8 +1,8 @@
 import 'package:balance/app/routes.dart';
+import 'package:balance/model/dao/balance.model.dart';
 import 'package:balance/model/dto/balance.dto.dart';
-import 'package:balance/model/states/balance.list.state.dart';
-import 'package:balance/model/states/balance.model.dart';
 import 'package:balance/model/states/year_month.state.dart';
+import 'package:balance/ui/view/balances/balance.details.view.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:balance/ui/widget/sidebar.widget.dart';
@@ -20,7 +20,6 @@ class BalanceList extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => YearMonthState(credit)),
-        Provider(create: (context) => BalanceListState())
       ],
       child: BalanceListChild(credit),
     );
@@ -67,9 +66,8 @@ class BalanceListBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final yearMonthState = context.watch<YearMonthState>();
-    final balanceModel = context.watch<BalanceModel>();
     return FutureBuilder(
-      future: balanceModel.getBalance(
+      future: BalanceModel.instance.getBalance(
         yearMonthState.credit,
         yearMonthState.year,
         yearMonthState.month,
@@ -81,7 +79,6 @@ class BalanceListBody extends StatelessWidget {
 
         if (snapshot.hasData) {
           final list = snapshot.data as List<Balance>;
-          context.read<BalanceListState>().result = list;
           return Column(
             children: [
               Expanded(
@@ -91,7 +88,7 @@ class BalanceListBody extends StatelessWidget {
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: list.length),
               ),
-              const BalanceSummaryControl()
+              BalanceSummaryControl(_getTotal(list))
             ],
           );
         }
@@ -100,10 +97,17 @@ class BalanceListBody extends StatelessWidget {
       },
     );
   }
+
+  int _getTotal(List<Balance> list) {
+    return list.isEmpty
+        ? 0
+        : list.map((e) => e.total).reduce((value, element) => value + element);
+  }
 }
 
 class BalanceSummaryControl extends StatelessWidget {
-  const BalanceSummaryControl({super.key});
+  final int total;
+  const BalanceSummaryControl(this.total, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +125,7 @@ class BalanceSummaryControl extends StatelessWidget {
               icon: const Icon(Icons.arrow_back),
             ),
             Text(
-              context.watch<BalanceListState>().total,
+              total.mmk,
               style: Theme.of(context).textTheme.headline5,
             ),
             IconButton(
@@ -144,6 +148,11 @@ class BalanceListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BalanceDetails(id: dto.id),
+        ));
+      },
       leading: CircleAvatar(
         backgroundColor: dto.category!.color,
         child: Text(

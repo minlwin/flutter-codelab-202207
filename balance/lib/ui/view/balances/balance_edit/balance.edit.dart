@@ -1,10 +1,10 @@
 import 'package:balance/model/dto/balance.details.dto.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
-import 'package:balance/ui/view/balances/balance_edit/balance.confirm.dart';
-import 'package:balance/ui/view/balances/balance_edit/category.select.dart';
-import 'package:balance/ui/view/balances/balance_edit/details.edit.dart';
-import 'package:balance/ui/view/balances/balance_edit/details.list.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/balance.confirm.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/category.select.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.edit.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +24,15 @@ class BalanceEditView extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (context) => NestedPagerState([
-                    "Select Category",
-                    "Balance Items",
-                    "Add Item",
-                    "Confirm",
-                  ])),
+              create: (context) => NestedPagerState.create(
+                    pages: {
+                      CategorySelect.title: const CategorySelect(),
+                      DetailsList.title: const DetailsList(),
+                      DetailsEdit.title: DetailsEdit(),
+                      BalanceConfirm.title: BalanceConfirm(),
+                    },
+                    current: CategorySelect.title,
+                  )),
           ChangeNotifierProvider(
               create: (context) => dto == null
                   ? BalanceEditState.forAddNew(credit)
@@ -53,29 +56,13 @@ class BalanceEditBody extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("${state.credit ? 'Credit' : 'Debit'} - ${pager.pageTitle}"),
+            Text("${state.credit ? 'Credit' : 'Debit'} - ${pager.title}"),
             const BalanceSummary(),
           ],
         ),
       ),
-      body: _getPage(pager.page),
+      body: pager.currentPage,
     );
-  }
-
-  Widget _getPage(int page) {
-    if (page == 0) {
-      return const CategorySelect();
-    }
-
-    if (page == 1) {
-      return const DetailsList();
-    }
-
-    if (page == 2) {
-      return DetailsEdit();
-    }
-
-    return BalanceConfirm();
   }
 }
 

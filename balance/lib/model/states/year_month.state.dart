@@ -27,15 +27,15 @@ class YearMonthState with ChangeNotifier {
 
   next() {
     final date = DateTime(year, month + 1, 1);
-    month = date.month;
-    year = date.year;
+    _month = date.month;
+    _year = date.year;
     notifyListeners();
   }
 
   previous() {
     final date = DateTime(year, month - 1, 1);
-    month = date.month;
-    year = date.year;
+    _month = date.month;
+    _year = date.year;
     notifyListeners();
   }
 }

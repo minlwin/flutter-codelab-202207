@@ -1,10 +1,15 @@
 import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/balance.confirm.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/category.select.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.edit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetailsList extends StatelessWidget {
+  static const String title = "Details List";
+
   const DetailsList({super.key});
 
   @override
@@ -44,7 +49,7 @@ class DetailsListControls extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 0;
+                  context.read<NestedPagerState>().change(CategorySelect.title);
                 },
                 child: const Text("Categories"),
               ),
@@ -55,7 +60,7 @@ class DetailsListControls extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 3;
+                  context.read<NestedPagerState>().change(BalanceConfirm.title);
                 },
                 child: const Text("Confirm"),
               ),
@@ -66,7 +71,7 @@ class DetailsListControls extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 2;
+                  context.read<NestedPagerState>().change(DetailsEdit.title);
                 },
                 child: const Text("Add Item"),
               ),

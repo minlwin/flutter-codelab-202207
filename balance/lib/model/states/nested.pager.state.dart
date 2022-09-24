@@ -1,36 +1,31 @@
+import 'package:balance/ui/widget/error.widget.dart';
 import 'package:flutter/material.dart';
 
 class NestedPagerState with ChangeNotifier {
-  int _page = 0;
+  String _current = "";
+  final Map<String, Widget> pages;
 
-  final List<String> pages;
-  int get totalPage => pages.length;
+  NestedPagerState._(this.pages);
 
-  NestedPagerState(this.pages);
+  factory NestedPagerState.create({
+    required Map<String, Widget> pages,
+    required String current,
+  }) {
+    final pager = NestedPagerState._(pages);
+    pager._current = current;
+    return pager;
+  }
 
-  int get page => _page;
-  bool get hasPrevious => _page > 0;
-  bool get hasNext => _page < totalPage;
+  String get title => _current;
 
-  String get pageTitle => pages[page];
-
-  set page(int page) {
-    _page = page;
+  change(String page) {
+    _current = page;
     notifyListeners();
   }
 
-  next() {
-    _page++;
-    notifyListeners();
-  }
-
-  previous() {
-    _page--;
-    notifyListeners();
-  }
-
-  void clear() {
-    _page = 0;
-    notifyListeners();
-  }
+  Widget get currentPage =>
+      pages[_current] ??
+      const AppError(
+        message: "There is no page.",
+      );
 }

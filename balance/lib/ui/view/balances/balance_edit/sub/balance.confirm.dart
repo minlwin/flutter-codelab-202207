@@ -1,12 +1,15 @@
+import 'package:balance/model/dao/balance.model.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
-import 'package:balance/model/states/balance.model.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../extensions.dart';
+import '../../../../extensions.dart';
 
 class BalanceConfirm extends StatelessWidget {
+  static const String title = "Confirm";
+
   final formKey = GlobalKey<FormState>();
   final dateController = TextEditingController();
   final remarkController = TextEditingController();
@@ -16,7 +19,6 @@ class BalanceConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<BalanceEditState>();
-    final model = context.read<BalanceModel>();
     dateController.text = state.createAt.label;
     remarkController.text = state.remark;
 
@@ -79,7 +81,7 @@ class BalanceConfirm extends StatelessWidget {
             if (formKey.currentState?.validate() ?? false) {
               state.createAt = dateController.text.dateTime;
               state.remark = remarkController.text;
-              model.save(state.balance, state.detailsList);
+              BalanceModel.instance.save(state.balance, state.detailsList);
               Navigator.of(context).pop();
             }
           },
@@ -111,7 +113,7 @@ class BalanceConfirmControl extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   onBackPress();
-                  context.read<NestedPagerState>().page = 2;
+                  context.read<NestedPagerState>().change(DetailsList.title);
                 },
                 child: const Text("Back"),
               ),

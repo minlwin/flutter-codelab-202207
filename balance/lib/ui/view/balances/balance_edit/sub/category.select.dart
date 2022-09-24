@@ -1,15 +1,19 @@
 import 'dart:developer';
 
+import 'package:balance/model/dao/category.model.dart';
 import 'package:balance/model/dto/category.dto.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
-import 'package:balance/model/states/category.model.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.edit.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategorySelect extends StatelessWidget {
+  static const String title = "Select Category";
+
   const CategorySelect({super.key});
 
   @override
@@ -19,7 +23,7 @@ class CategorySelect extends StatelessWidget {
       children: [
         Expanded(
           child: FutureBuilder(
-            future: context.watch<CategoryModel>().findByType(state.credit),
+            future: CategoryModel.instance.findByType(state.credit),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 log(snapshot.error.toString());
@@ -63,8 +67,8 @@ class CategorySelectItem extends StatelessWidget {
         final state = context.read<BalanceEditState>();
         state.category = dto;
 
-        context.read<NestedPagerState>().page =
-            state.detailsList.isEmpty ? 2 : 1;
+        context.read<NestedPagerState>().change(
+            state.detailsList.isEmpty ? DetailsEdit.title : DetailsList.title);
       },
     );
   }
@@ -84,7 +88,7 @@ class CategorySelectControl extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 1;
+                  context.read<NestedPagerState>().change(DetailsList.title);
                 },
                 child: const Text("Details Items"),
               ),
@@ -95,7 +99,7 @@ class CategorySelectControl extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 2;
+                  context.read<NestedPagerState>().change(DetailsEdit.title);
                 },
                 child: const Text("Add Item"),
               ),

@@ -2,9 +2,12 @@ import 'package:balance/model/db/balance.db.dart';
 import 'package:balance/model/dto/balance.details.dto.dart';
 import 'package:balance/model/dto/balance.dto.dart';
 import 'package:balance/model/dto/details.dto.dart';
-import 'package:flutter/material.dart';
 
-class BalanceModel with ChangeNotifier {
+class BalanceModel {
+  BalanceModel._();
+
+  static BalanceModel instance = BalanceModel._();
+
   final table =
       "balance b join details d on b.id = d.balance_id join category c on b.category_id = c.id";
   final columns = [
@@ -31,7 +34,6 @@ class BalanceModel with ChangeNotifier {
         await txn.insert("details", item.toMap());
       }
     });
-    notifyListeners();
     return balance.id;
   }
 

@@ -1,5 +1,4 @@
 import 'package:balance/model/states/color.picker.state.dart';
-import 'package:balance/model/states/colors.select.dart';
 import 'package:balance/ui/widget/types.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,3 +51,24 @@ class ColorPickerBody extends StatelessWidget {
     );
   }
 }
+
+const List<Color> colors = [
+  Colors.red,
+  Colors.pink,
+  Colors.purple,
+  Colors.deepPurple,
+  Colors.indigo,
+  Colors.blue,
+  Colors.lightBlue,
+  Colors.cyan,
+  Colors.teal,
+  Colors.green,
+  Colors.lightGreen,
+  Colors.lime,
+  Colors.amber,
+  Colors.orange,
+  Colors.deepOrange,
+  Colors.brown,
+  Colors.grey,
+  Colors.blueGrey
+];

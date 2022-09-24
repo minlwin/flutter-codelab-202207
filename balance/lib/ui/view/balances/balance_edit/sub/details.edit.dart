@@ -1,10 +1,14 @@
 import 'package:balance/model/dto/details.dto.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/category.select.dart';
+import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetailsEdit extends StatelessWidget {
+  static const String title = "Add Details";
+
   final formKey = GlobalKey<FormState>();
   final itemControl = TextEditingController();
   final amountControl = TextEditingController();
@@ -62,7 +66,7 @@ class DetailsEdit extends StatelessWidget {
                   item: itemControl.text,
                   amount: int.parse(amountControl.text));
               context.read<BalanceEditState>().addDetails(dto);
-              context.read<NestedPagerState>().page = 1;
+              context.read<NestedPagerState>().change(DetailsList.title);
             }
           },
         )
@@ -86,7 +90,7 @@ class DetailsEditControls extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 0;
+                  context.read<NestedPagerState>().change(CategorySelect.title);
                 },
                 child: const Text("Categories"),
               ),
@@ -106,7 +110,7 @@ class DetailsEditControls extends StatelessWidget {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  context.read<NestedPagerState>().page = 1;
+                  context.read<NestedPagerState>().change(DetailsList.title);
                 },
                 child: const Text("Details Items"),
               ),
