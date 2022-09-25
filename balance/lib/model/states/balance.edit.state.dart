@@ -3,7 +3,6 @@ import 'package:balance/model/dto/balance.dto.dart';
 import 'package:balance/model/dto/category.dto.dart';
 import 'package:balance/model/dto/details.dto.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class BalanceEditState with ChangeNotifier {
   BalanceWidthDetails? dto;
@@ -37,10 +36,9 @@ class BalanceEditState with ChangeNotifier {
     notifyListeners();
   }
 
-  int get _total => detailsList.isEmpty
+  int get total => detailsList.isEmpty
       ? 0
       : detailsList.map((e) => e.amount).reduce((a, b) => a + b);
-  String get total => NumberFormat("#,##0").format(_total);
 
   DateTime get createAt => dto?.balance.createAt ?? DateTime.now();
   String get remark => dto?.balance.remark ?? "";

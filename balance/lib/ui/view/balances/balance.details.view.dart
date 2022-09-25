@@ -48,10 +48,70 @@ class BalanceDetailsAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: MediaQuery.of(context).size.width / 2,
+      expandedHeight: MediaQuery.of(context).size.height / 4,
       flexibleSpace: FlexibleSpaceBar(
-        title: Text(dto.remark),
         collapseMode: CollapseMode.parallax,
+        background: BalanceSummary(dto),
+        title: Text(dto.remark),
+      ),
+      actions: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+      ],
+    );
+  }
+}
+
+class BalanceSummary extends StatelessWidget {
+  final Balance balance;
+  const BalanceSummary(this.balance, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 8),
+              child: Icon(
+                Icons.shopping_cart,
+                size: MediaQuery.of(context).size.width / 4,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    balance.total.mmk,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(color: Colors.white),
+                  ),
+                ),
+                Text(
+                  balance.category!.name,
+                  style: TextStyle(color: Colors.grey.shade100),
+                ),
+                Text(
+                  balance.category!.credit ? 'Credit' : 'Debit',
+                  style: TextStyle(color: Colors.grey.shade100),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

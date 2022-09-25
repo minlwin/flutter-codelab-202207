@@ -8,6 +8,8 @@ import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../extensions.dart';
+
 class BalanceEditView extends StatelessWidget {
   final bool credit;
 
@@ -80,7 +82,7 @@ class BalanceSummary extends StatelessWidget {
           style: const TextStyle(fontSize: 14),
         ),
         Text(
-          "${state.total} MMK",
+          state.total.mmk,
           style: const TextStyle(fontSize: 14),
         ),
       ],
