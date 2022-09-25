@@ -78,7 +78,9 @@ class BalanceSummary extends StatelessWidget {
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: 8),
               child: Icon(
-                Icons.shopping_cart,
+                balance.category!.credit
+                    ? Icons.add_shopping_cart_outlined
+                    : Icons.remove_shopping_cart_outlined,
                 size: MediaQuery.of(context).size.width / 4,
                 color: Colors.white,
               ),
@@ -105,7 +107,7 @@ class BalanceSummary extends StatelessWidget {
                   style: TextStyle(color: Colors.grey.shade100),
                 ),
                 Text(
-                  balance.category!.credit ? 'Credit' : 'Debit',
+                  balance.createAt!.label,
                   style: TextStyle(color: Colors.grey.shade100),
                 ),
               ],
