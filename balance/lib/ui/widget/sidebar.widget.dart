@@ -22,10 +22,11 @@ class Sidebar extends StatelessWidget {
         Column(
           children: [
             _menuItem(context, "Home", routeHome, Icons.home_outlined),
+            _menuItem(context, "Categories", routeCategories,
+                Icons.discount_outlined),
             _menuItem(context, "Credits", routeCredits, Icons.arrow_upward),
             _menuItem(context, "Debits", routeDebits, Icons.arrow_downward),
-            _menuItem(context, "Categories", routeCategories, Icons.attachment),
-            _menuItem(context, "Settings", routeSettings, Icons.manage_history),
+            _menuItem(context, "Trail Balance", routeTrial, Icons.bar_chart),
           ],
         )
       ]),

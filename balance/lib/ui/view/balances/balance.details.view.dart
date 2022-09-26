@@ -1,10 +1,12 @@
 import 'package:balance/app/routes.dart';
 import 'package:balance/model/dao/balance.model.dart';
-import 'package:balance/model/dto/balance.dto.dart';
+import 'package:balance/model/dto/balance.details.dto.dart';
 import 'package:balance/model/dto/details.dto.dart';
+import 'package:balance/model/states/balance.details.state.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../extensions.dart';
 
@@ -14,8 +16,21 @@ class BalanceDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => BalanceDetailsState(id),
+      child: const BalanceDetailsWrapper(),
+    );
+  }
+}
+
+class BalanceDetailsWrapper extends StatelessWidget {
+  const BalanceDetailsWrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: BalanceModel.instance.findById(id),
+      future: BalanceModel.instance
+          .findById(context.read<BalanceDetailsState>().id),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const AppError();
@@ -30,7 +45,7 @@ class BalanceDetails extends StatelessWidget {
           return Scaffold(
             body: CustomScrollView(
               slivers: [
-                BalanceDetailsAppBar(snapshot.data!.balance),
+                BalanceDetailsAppBar(snapshot.data!),
                 BalanceDetailsBody(snapshot.data!.details),
               ],
             ),
@@ -43,24 +58,28 @@ class BalanceDetails extends StatelessWidget {
 }
 
 class BalanceDetailsAppBar extends StatelessWidget {
-  final Balance dto;
+  final BalanceWidthDetails dto;
   const BalanceDetailsAppBar(this.dto, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    final reloader = context.read<BalanceDetailsState>();
     return SliverAppBar(
       expandedHeight: MediaQuery.of(context).size.height / 4,
       flexibleSpace: FlexibleSpaceBar(
         collapseMode: CollapseMode.parallax,
         background: BalanceSummary(dto),
-        title: Text(dto.remark),
+        title: Text(dto.balance.remark),
       ),
       actions: [
         IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                  dto.category!.credit ? routeCreditsEdit : routeDebitsEdit,
+            onPressed: () async {
+              await Navigator.of(context).pushNamed(
+                  dto.balance.category!.credit
+                      ? routeCreditsEdit
+                      : routeDebitsEdit,
                   arguments: dto);
+              reloader.reload();
             },
             icon: const Icon(Icons.edit)),
       ],
@@ -69,8 +88,8 @@ class BalanceDetailsAppBar extends StatelessWidget {
 }
 
 class BalanceSummary extends StatelessWidget {
-  final Balance balance;
-  const BalanceSummary(this.balance, {super.key});
+  final BalanceWidthDetails dto;
+  const BalanceSummary(this.dto, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +104,7 @@ class BalanceSummary extends StatelessWidget {
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: 8),
               child: Icon(
-                balance.category!.credit
+                dto.balance.category!.credit
                     ? Icons.add_shopping_cart_outlined
                     : Icons.remove_shopping_cart_outlined,
                 size: MediaQuery.of(context).size.width / 4,
@@ -102,7 +121,7 @@ class BalanceSummary extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
-                    balance.total.mmk,
+                    dto.balance.total.mmk,
                     style: Theme.of(context)
                         .textTheme
                         .headline6!
@@ -110,11 +129,11 @@ class BalanceSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  balance.category?.name ?? "Catergory",
+                  dto.balance.category?.name ?? "Catergory",
                   style: TextStyle(color: Colors.grey.shade100),
                 ),
                 Text(
-                  balance.createAt!.label,
+                  dto.balance.createAt!.label,
                   style: TextStyle(color: Colors.grey.shade100),
                 ),
               ],

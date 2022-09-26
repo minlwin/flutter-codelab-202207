@@ -18,10 +18,8 @@ class BalanceList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => YearMonthState(credit)),
-      ],
+    return ChangeNotifierProvider(
+      create: (context) => YearMonthState(credit),
       child: BalanceListChild(credit),
     );
   }
@@ -33,6 +31,7 @@ class BalanceListChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.read<YearMonthState>();
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -47,9 +46,10 @@ class BalanceListChild extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.of(context)
+            onPressed: () async {
+              await Navigator.of(context)
                   .pushNamed(credit ? routeCreditsEdit : routeDebitsEdit);
+              notifier.reload();
             },
             icon: const Icon(Icons.add),
           )

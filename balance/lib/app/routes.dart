@@ -5,5 +5,4 @@ const routeDebits = "/debits";
 const routeDebitsEdit = "/debits/edit";
 const routeCategories = "/categories";
 const routeCategoriesEdit = "/categories/edit";
-const routeSettings = "/settings";
-const routeSettingsEdit = "/settings/edit";
+const routeTrial = "/trial-balance";

@@ -4,7 +4,7 @@ import 'package:balance/ui/view/balances/balance_edit/balance.edit.dart';
 import 'package:balance/ui/view/categories/category.edit.view.dart';
 import 'package:balance/ui/view/categories/category.view.dart';
 import 'package:balance/ui/view/home.view.dart';
-import 'package:balance/ui/view/settings.view.dart';
+import 'package:balance/ui/view/trial.balance.view.dart';
 import 'package:flutter/material.dart';
 
 class BalanceApp extends StatelessWidget {
@@ -22,7 +22,7 @@ class BalanceApp extends StatelessWidget {
         routeDebitsEdit: (context) => const BalanceEditView(credit: false),
         routeCategories: (context) => const CagtegoryView(),
         routeCategoriesEdit: (context) => const CategoryEditView(),
-        routeSettings: (context) => const SettingsView(),
+        routeTrial: (context) => const TrialBalanceView(),
       },
       initialRoute: routeHome,
     );

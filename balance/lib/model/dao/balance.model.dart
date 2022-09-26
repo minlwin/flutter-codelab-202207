@@ -4,11 +4,12 @@ import 'package:balance/model/dto/balance.dto.dart';
 import 'package:balance/model/dto/details.dto.dart';
 
 class BalanceModel {
+  final table = "balance";
   BalanceModel._();
 
   static BalanceModel instance = BalanceModel._();
 
-  final table =
+  final tableJoin =
       "balance b join details d on b.id = d.balance_id join category c on b.category_id = c.id";
   final columns = [
     "b.id balance_id",
@@ -27,11 +28,26 @@ class BalanceModel {
     final db = await BalanceDb.instance.database;
 
     await db.transaction((txn) async {
-      balance.id = await txn.insert("balance", balance.toMap());
-      for (final item in detailsList) {
-        item.balance = balance;
-        balance.total += item.amount;
-        await txn.insert("details", item.toMap());
+      if (balance.id == 0) {
+        balance.id = await txn.insert(table, balance.toMap());
+        for (final item in detailsList) {
+          item.balance = balance;
+          balance.total += item.amount;
+          await txn.insert("details", item.toMap());
+        }
+      } else {
+        await txn.update(table, balance.toMap(),
+            where: "id = ?", whereArgs: [balance.id]);
+        for (final item in detailsList) {
+          item.balance = balance;
+          balance.total += item.amount;
+          if (item.id == 0) {
+            await txn.insert("details", item.toMap());
+          } else {
+            await txn.update("details", item.toMap(),
+                where: "id = ?", whereArgs: [item.id]);
+          }
+        }
       }
     });
     return balance.id;
@@ -40,7 +56,7 @@ class BalanceModel {
   Future<List<Balance>> getBalance(bool credit, int year, int month) async {
     final db = await BalanceDb.instance.database;
     final result = await db.query(
-      table,
+      tableJoin,
       columns: columns,
       groupBy: groupBy,
       where: "c.credit = ? and b.create_at >= ? and b.create_at < ?",
@@ -49,6 +65,23 @@ class BalanceModel {
         DateTime(year, month, 1).millisecondsSinceEpoch,
         DateTime(year, month + 1, 1).millisecondsSinceEpoch
       ],
+      orderBy: "b.create_at",
+    );
+    return Balance.list(result);
+  }
+
+  Future<List<Balance>> getTrialBalance(int year, int month) async {
+    final db = await BalanceDb.instance.database;
+    final result = await db.query(
+      tableJoin,
+      columns: columns,
+      groupBy: groupBy,
+      where: "b.create_at >= ? and b.create_at < ?",
+      whereArgs: [
+        DateTime(year, month, 1).millisecondsSinceEpoch,
+        DateTime(year, month + 1, 1).millisecondsSinceEpoch
+      ],
+      orderBy: "b.create_at",
     );
     return Balance.list(result);
   }
@@ -56,7 +89,7 @@ class BalanceModel {
   Future<BalanceWidthDetails?> findById(int id) async {
     final db = await BalanceDb.instance.database;
     final result = await db.query(
-      table,
+      tableJoin,
       columns: columns,
       groupBy: groupBy,
       where: "b.id = ?",
