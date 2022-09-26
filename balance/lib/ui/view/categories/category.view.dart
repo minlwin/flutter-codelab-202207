@@ -61,7 +61,7 @@ class CategoryListItem extends StatelessWidget {
           style: const TextStyle(color: Colors.white),
         ),
       ),
-      title: Text(dto.name),
+      title: Text(dto.name ?? "Category"),
       subtitle: Text(dto.credit ? "Credit" : "Debit"),
       trailing: GestureDetector(
         onTap: () {

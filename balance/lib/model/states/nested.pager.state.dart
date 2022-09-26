@@ -1,14 +1,16 @@
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:flutter/material.dart';
 
+typedef NestedPageBuilder = Widget Function();
+
 class NestedPagerState with ChangeNotifier {
   String _current = "";
-  final Map<String, Widget> pages;
+  final Map<String, NestedPageBuilder> pages;
 
   NestedPagerState._(this.pages);
 
   factory NestedPagerState.create({
-    required Map<String, Widget> pages,
+    required Map<String, NestedPageBuilder> pages,
     required String current,
   }) {
     final pager = NestedPagerState._(pages);
@@ -24,7 +26,7 @@ class NestedPagerState with ChangeNotifier {
   }
 
   Widget get currentPage =>
-      pages[_current] ??
+      pages[_current]?.call() ??
       const AppError(
         message: "There is no page.",
       );

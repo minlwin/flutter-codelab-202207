@@ -6,6 +6,8 @@ import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/details.edit.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
+import 'package:balance/ui/widget/bottom.nav.bar.dart';
+import 'package:balance/ui/widget/controls.button.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,22 @@ class CategorySelect extends StatelessWidget {
             },
           ),
         ),
-        const CategorySelectControl()
+        BottomNavBar(controls: [
+          ControlsButton(
+            icon: Icons.list,
+            label: "Item List",
+            action: () {
+              context.read<NestedPagerState>().change(DetailsList.title);
+            },
+          ),
+          ControlsButton(
+            icon: Icons.add,
+            label: "Item List",
+            action: () {
+              context.read<NestedPagerState>().change(DetailsEdit.title);
+            },
+          ),
+        ])
       ],
     );
   }
@@ -62,7 +79,7 @@ class CategorySelectItem extends StatelessWidget {
         backgroundColor: dto.color,
         child: Text(dto.title),
       ),
-      title: Text(dto.name),
+      title: Text(dto.name ?? "Category"),
       onTap: () {
         final state = context.read<BalanceEditState>();
         state.category = dto;
@@ -70,43 +87,6 @@ class CategorySelectItem extends StatelessWidget {
         context.read<NestedPagerState>().change(
             state.detailsList.isEmpty ? DetailsEdit.title : DetailsList.title);
       },
-    );
-  }
-}
-
-class CategorySelectControl extends StatelessWidget {
-  const CategorySelectControl({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(DetailsList.title);
-                },
-                child: const Text("Details Items"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(DetailsEdit.title);
-                },
-                child: const Text("Add Item"),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

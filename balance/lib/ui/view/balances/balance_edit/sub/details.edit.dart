@@ -3,6 +3,8 @@ import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/category.select.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
+import 'package:balance/ui/widget/bottom.nav.bar.dart';
+import 'package:balance/ui/widget/controls.button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -59,65 +61,38 @@ class DetailsEdit extends StatelessWidget {
             ),
           ),
         ),
-        DetailsEditControls(
-          onSave: () {
-            if (formKey.currentState?.validate() ?? false) {
-              final dto = Details(
-                  item: itemControl.text,
-                  amount: int.parse(amountControl.text));
-              context.read<BalanceEditState>().addDetails(dto);
-              context.read<NestedPagerState>().change(DetailsList.title);
-            }
-          },
+        BottomNavBar(
+          controls: [
+            ControlsButton(
+              icon: Icons.discount_outlined,
+              label: "Categroies",
+              action: () {
+                context.read<NestedPagerState>().change(CategorySelect.title);
+              },
+            ),
+            ControlsButton(
+              icon: Icons.list,
+              label: "Items",
+              action: () {
+                context.read<NestedPagerState>().change(DetailsList.title);
+              },
+            ),
+            ControlsButton(
+              icon: Icons.save_alt,
+              label: "Save Item",
+              action: () {
+                if (formKey.currentState?.validate() ?? false) {
+                  final dto = Details(
+                      item: itemControl.text,
+                      amount: int.parse(amountControl.text));
+                  context.read<BalanceEditState>().addDetails(dto);
+                  context.read<NestedPagerState>().change(DetailsList.title);
+                }
+              },
+            ),
+          ],
         )
       ],
-    );
-  }
-}
-
-class DetailsEditControls extends StatelessWidget {
-  final VoidCallback onSave;
-  const DetailsEditControls({super.key, required this.onSave});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(CategorySelect.title);
-                },
-                child: const Text("Categories"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: onSave,
-                child: const Text("Save"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(DetailsList.title);
-                },
-                child: const Text("Details Items"),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

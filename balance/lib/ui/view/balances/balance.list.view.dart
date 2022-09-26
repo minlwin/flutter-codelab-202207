@@ -3,6 +3,7 @@ import 'package:balance/model/dao/balance.model.dart';
 import 'package:balance/model/dto/balance.dto.dart';
 import 'package:balance/model/states/year_month.state.dart';
 import 'package:balance/ui/view/balances/balance.details.view.dart';
+import 'package:balance/ui/widget/bottom.nav.bar.dart';
 import 'package:balance/ui/widget/error.widget.dart';
 import 'package:balance/ui/widget/loading.widget.dart';
 import 'package:balance/ui/widget/sidebar.widget.dart';
@@ -88,7 +89,26 @@ class BalanceListBody extends StatelessWidget {
                     separatorBuilder: (context, index) => const Divider(),
                     itemCount: list.length),
               ),
-              BalanceSummaryControl(_getTotal(list))
+              BottomNavBar(
+                controls: [
+                  IconButton(
+                    onPressed: () {
+                      context.read<YearMonthState>().previous();
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  Text(
+                    _getTotal(list).mmk,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      context.read<YearMonthState>().next();
+                    },
+                    icon: const Icon(Icons.arrow_forward),
+                  ),
+                ],
+              )
             ],
           );
         }
@@ -102,42 +122,6 @@ class BalanceListBody extends StatelessWidget {
     return list.isEmpty
         ? 0
         : list.map((e) => e.total).reduce((value, element) => value + element);
-  }
-}
-
-class BalanceSummaryControl extends StatelessWidget {
-  final int total;
-  const BalanceSummaryControl(this.total, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {
-                context.read<YearMonthState>().previous();
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            Text(
-              total.mmk,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            IconButton(
-              onPressed: () {
-                context.read<YearMonthState>().next();
-              },
-              icon: const Icon(Icons.arrow_forward),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
 

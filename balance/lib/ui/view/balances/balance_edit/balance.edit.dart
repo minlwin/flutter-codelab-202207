@@ -26,19 +26,21 @@ class BalanceEditView extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (context) => NestedPagerState.create(
-                    pages: {
-                      CategorySelect.title: const CategorySelect(),
-                      DetailsList.title: const DetailsList(),
-                      DetailsEdit.title: DetailsEdit(),
-                      BalanceConfirm.title: BalanceConfirm(),
-                    },
-                    current: CategorySelect.title,
-                  )),
+            create: (context) => NestedPagerState.create(
+              pages: {
+                CategorySelect.title: () => const CategorySelect(),
+                DetailsList.title: () => const DetailsList(),
+                DetailsEdit.title: () => DetailsEdit(),
+                BalanceConfirm.title: () => BalanceConfirm(),
+              },
+              current: CategorySelect.title,
+            ),
+          ),
           ChangeNotifierProvider(
-              create: (context) => dto == null
-                  ? BalanceEditState.forAddNew(credit)
-                  : BalanceEditState.forEdit(dto)),
+            create: (context) => dto == null
+                ? BalanceEditState.forAddNew(credit)
+                : BalanceEditState.forEdit(dto),
+          ),
         ],
         child: const BalanceEditBody(),
       ),

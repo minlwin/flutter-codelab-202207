@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class Category {
   int id;
-  String name;
+  String? name;
   Color? color;
   bool credit;
 
-  get title => name.substring(0, 2).toUpperCase();
+  get title => name?.substring(0, 2).toUpperCase() ?? "CA";
 
   Category({
     this.id = 0,
-    this.name = "",
+    this.name,
     this.color,
     this.credit = true,
   });

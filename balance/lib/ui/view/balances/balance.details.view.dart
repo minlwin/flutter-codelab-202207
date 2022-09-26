@@ -1,3 +1,4 @@
+import 'package:balance/app/routes.dart';
 import 'package:balance/model/dao/balance.model.dart';
 import 'package:balance/model/dto/balance.dto.dart';
 import 'package:balance/model/dto/details.dto.dart';
@@ -55,7 +56,13 @@ class BalanceDetailsAppBar extends StatelessWidget {
         title: Text(dto.remark),
       ),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(
+                  dto.category!.credit ? routeCreditsEdit : routeDebitsEdit,
+                  arguments: dto);
+            },
+            icon: const Icon(Icons.edit)),
       ],
     );
   }
@@ -103,7 +110,7 @@ class BalanceSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  balance.category!.name,
+                  balance.category?.name ?? "Catergory",
                   style: TextStyle(color: Colors.grey.shade100),
                 ),
                 Text(

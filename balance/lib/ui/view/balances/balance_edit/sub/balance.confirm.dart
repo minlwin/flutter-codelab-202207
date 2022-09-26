@@ -2,6 +2,8 @@ import 'package:balance/model/dao/balance.model.dart';
 import 'package:balance/model/states/balance.edit.state.dart';
 import 'package:balance/model/states/nested.pager.state.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/details.list.dart';
+import 'package:balance/ui/widget/bottom.nav.bar.dart';
+import 'package:balance/ui/widget/controls.button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -76,60 +78,30 @@ class BalanceConfirm extends StatelessWidget {
             ),
           ),
         ),
-        BalanceConfirmControl(
-          onFormSubmit: () {
-            if (formKey.currentState?.validate() ?? false) {
+        BottomNavBar(controls: [
+          ControlsButton(
+            icon: Icons.back_hand_outlined,
+            label: "Back",
+            action: () {
               state.createAt = dateController.text.dateTime;
               state.remark = remarkController.text;
-              BalanceModel.instance.save(state.balance, state.detailsList);
-              Navigator.of(context).pop();
-            }
-          },
-          onBackPress: () {
-            state.createAt = dateController.text.dateTime;
-            state.remark = remarkController.text;
-          },
-        )
+              context.read<NestedPagerState>().change(DetailsList.title);
+            },
+          ),
+          ControlsButton(
+            icon: Icons.save_alt,
+            label: "Save",
+            action: () {
+              if (formKey.currentState?.validate() ?? false) {
+                state.createAt = dateController.text.dateTime;
+                state.remark = remarkController.text;
+                BalanceModel.instance.save(state.balance, state.detailsList);
+                Navigator.of(context).pop();
+              }
+            },
+          )
+        ])
       ],
-    );
-  }
-}
-
-class BalanceConfirmControl extends StatelessWidget {
-  final VoidCallback onFormSubmit;
-  final VoidCallback onBackPress;
-  const BalanceConfirmControl(
-      {super.key, required this.onFormSubmit, required this.onBackPress});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  onBackPress();
-                  context.read<NestedPagerState>().change(DetailsList.title);
-                },
-                child: const Text("Back"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: onFormSubmit,
-                child: const Text("Save"),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

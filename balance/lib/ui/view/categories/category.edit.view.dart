@@ -35,7 +35,7 @@ class CategoryEditBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (null != dto) {
-      nameController.text = dto!.name;
+      nameController.text = dto?.name ?? "Category";
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),

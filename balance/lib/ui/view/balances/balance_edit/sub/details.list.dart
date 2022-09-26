@@ -3,6 +3,8 @@ import 'package:balance/model/states/nested.pager.state.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/balance.confirm.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/category.select.dart';
 import 'package:balance/ui/view/balances/balance_edit/sub/details.edit.dart';
+import 'package:balance/ui/widget/bottom.nav.bar.dart';
+import 'package:balance/ui/widget/controls.button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -29,56 +31,30 @@ class DetailsList extends StatelessWidget {
               separatorBuilder: (context, index) => const Divider(),
               itemCount: state.detailsList.length),
         ),
-        const DetailsListControls(),
+        BottomNavBar(controls: [
+          ControlsButton(
+            icon: Icons.discount_outlined,
+            label: "Categories",
+            action: () {
+              context.read<NestedPagerState>().change(CategorySelect.title);
+            },
+          ),
+          ControlsButton(
+            icon: Icons.add,
+            label: "Add Item",
+            action: () {
+              context.read<NestedPagerState>().change(DetailsEdit.title);
+            },
+          ),
+          ControlsButton(
+            icon: Icons.check,
+            label: "Confirm",
+            action: () {
+              context.read<NestedPagerState>().change(BalanceConfirm.title);
+            },
+          )
+        ]),
       ],
-    );
-  }
-}
-
-class DetailsListControls extends StatelessWidget {
-  const DetailsListControls({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(CategorySelect.title);
-                },
-                child: const Text("Categories"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(BalanceConfirm.title);
-                },
-                child: const Text("Confirm"),
-              ),
-            ),
-          ),
-          Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  context.read<NestedPagerState>().change(DetailsEdit.title);
-                },
-                child: const Text("Add Item"),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
