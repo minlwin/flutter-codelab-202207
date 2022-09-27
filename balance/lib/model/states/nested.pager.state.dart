@@ -21,8 +21,10 @@ class NestedPagerState with ChangeNotifier {
   String get title => _current;
 
   change(String page) {
-    _current = page;
-    notifyListeners();
+    if (_current != page) {
+      _current = page;
+      notifyListeners();
+    }
   }
 
   Widget get currentPage =>

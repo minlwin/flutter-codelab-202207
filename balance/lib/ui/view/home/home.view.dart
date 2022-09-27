@@ -1,5 +1,7 @@
 import 'package:balance/model/states/nested.pager.state.dart';
 import 'package:balance/model/states/year_mont.trial.state.dart';
+import 'package:balance/ui/view/home/home.category.dart';
+import 'package:balance/ui/view/home/home.summary.dart';
 import 'package:balance/ui/widget/bottom.nav.bar.dart';
 import 'package:balance/ui/widget/controls.button.dart';
 import 'package:balance/ui/widget/sidebar.widget.dart';
@@ -63,17 +65,23 @@ class HomeBody extends StatelessWidget {
           ControlsButton(
             icon: Icons.house,
             label: "Home",
-            action: () {},
+            action: () {
+              pager.change(HomeSummary.title);
+            },
           ),
           ControlsButton(
             icon: Icons.arrow_upward,
             label: "Credits",
-            action: () {},
+            action: () {
+              pager.change(HomeCategory.creditTitle);
+            },
           ),
           ControlsButton(
             icon: Icons.arrow_downward,
             label: "Debits",
-            action: () {},
+            action: () {
+              pager.change(HomeCategory.debitTitle);
+            },
           ),
           IconButton(
             onPressed: () {
@@ -84,28 +92,5 @@ class HomeBody extends StatelessWidget {
         ])
       ]),
     );
-  }
-}
-
-class HomeSummary extends StatelessWidget {
-  static const String title = "Home";
-  const HomeSummary({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class HomeCategory extends StatelessWidget {
-  static const creditTitle = "Credit";
-  static const debitTitle = "Debit";
-
-  final bool credit;
-  const HomeCategory(this.credit, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

@@ -3,7 +3,7 @@ import 'package:balance/ui/view/balances/balance.list.view.dart';
 import 'package:balance/ui/view/balances/balance_edit/balance.edit.dart';
 import 'package:balance/ui/view/categories/category.edit.view.dart';
 import 'package:balance/ui/view/categories/category.view.dart';
-import 'package:balance/ui/view/home.view.dart';
+import 'package:balance/ui/view/home/home.view.dart';
 import 'package:balance/ui/view/trial.balance.view.dart';
 import 'package:flutter/material.dart';
 
