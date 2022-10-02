@@ -63,6 +63,10 @@ class CategoryItem extends StatelessWidget {
       ),
       title: Text(dto.name),
       subtitle: Text(DateTimeUtils.format(dto.createAt)),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CategoryEditView(dto: dto)));
+      },
     );
   }
 }

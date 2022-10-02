@@ -2,7 +2,7 @@ import 'package:categories/model/category.dao.dart';
 import 'package:categories/model/category.dto.dart';
 import 'package:flutter/material.dart';
 
-class CategoryEditState with ChangeNotifier {
+class CategoryEditState {
   final Category _state = Category(name: "", color: Colors.red);
 
   CategoryEditState._();
@@ -18,22 +18,20 @@ class CategoryEditState with ChangeNotifier {
     return state;
   }
 
-  setName(String name) {
-    _state.name = name;
-    notifyListeners();
-  }
+  get name => _state.name;
+  get color => _state.color;
+  get creation => _state.createAt;
 
   setColor(Color color) {
     _state.color = color;
-    notifyListeners();
   }
 
   setCreation(DateTime date) {
     _state.createAt = date;
-    notifyListeners();
   }
 
-  save() async {
-    CategoryDao().save(_state);
+  save(String name) async {
+    _state.name = name;
+    await CategoryDao().save(_state);
   }
 }

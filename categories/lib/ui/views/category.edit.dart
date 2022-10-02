@@ -1,10 +1,14 @@
+import 'package:categories/model/category.dto.dart';
 import 'package:categories/model/states/category.edit.state.dart';
+import 'package:categories/ui/views/category.list.dart';
+import 'package:categories/ui/widgets/color.picker.dart';
 import 'package:categories/utils/date.utitls.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CategoryEditView extends StatelessWidget {
-  const CategoryEditView({super.key});
+  final Category? dto;
+  const CategoryEditView({super.key, this.dto});
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +16,8 @@ class CategoryEditView extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Edit Category"),
       ),
-      body: ChangeNotifierProvider(
-        create: (context) => CategoryEditState.from(),
+      body: Provider(
+        create: (context) => CategoryEditState.from(dto: dto),
         child: CategoryEditBody(),
       ),
     );
@@ -29,11 +33,15 @@ class CategoryEditBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final editState = context.read<CategoryEditState>();
+    nameController.text = editState.name;
+    dateController.text = DateTimeUtils.format(editState.creation);
     return Container(
       padding: const EdgeInsets.all(8),
       child: Form(
         key: formKey,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
               controller: nameController,
@@ -42,6 +50,12 @@ class CategoryEditBody extends StatelessWidget {
                 icon: Icon(Icons.label_outline),
               ),
               keyboardType: TextInputType.name,
+              validator: (value) {
+                if (null == value || value.isEmpty) {
+                  return "Enter Category Name.";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 8),
             TextFormField(
@@ -51,8 +65,13 @@ class CategoryEditBody extends StatelessWidget {
                 icon: Icon(Icons.event),
               ),
               keyboardType: TextInputType.none,
+              validator: (value) {
+                if (null == value || value.isEmpty) {
+                  return "Select Create Date.";
+                }
+                return null;
+              },
               onTap: () async {
-                final state = context.read<CategoryEditState>();
                 final date = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
@@ -63,10 +82,40 @@ class CategoryEditBody extends StatelessWidget {
                 );
 
                 if (null != date) {
-                  state.setCreation(date);
+                  editState.setCreation(date);
                   dateController.text = DateTimeUtils.format(date);
                 }
               },
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 38),
+                child: ColorPicker(
+                  defaultColor: editState.color,
+                  onColorSelect: (color) {
+                    editState.setColor(color);
+                  },
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.only(left: 38),
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (formKey.currentState?.validate() ?? false) {
+                    editState.save(nameController.text);
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const CategoryListView(),
+                      ),
+                      (route) => false,
+                    );
+                  }
+                },
+                child: const Text("Save"),
+              ),
             )
           ],
         ),
