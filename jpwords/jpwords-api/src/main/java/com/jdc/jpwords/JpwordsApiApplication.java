@@ -5,7 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-@PropertySource("classpath:/config/words-app.properties")
+@PropertySource({
+	"classpath:/config/words-app.properties",
+	"classpath:/config/admin.properties"
+})
 public class JpwordsApiApplication {
 
 	public static void main(String[] args) {

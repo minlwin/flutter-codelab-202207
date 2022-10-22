@@ -2,6 +2,7 @@ package com.jdc.jpwords;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,7 +36,7 @@ public class JpwordsApiSecurity {
 		return http
 				.cors().and().csrf().disable()
 				.authorizeHttpRequests()
-				.mvcMatchers("/security/login").permitAll()
+				.mvcMatchers(HttpMethod.POST, "/security/login").permitAll()
 				.anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(appTokenFilter, UsernamePasswordAuthenticationFilter.class)

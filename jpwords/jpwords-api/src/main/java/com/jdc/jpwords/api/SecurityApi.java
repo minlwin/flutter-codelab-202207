@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jdc.jpwords.api.advices.JpwordsVaildationException;
 import com.jdc.jpwords.model.dto.input.LoginForm;
 import com.jdc.jpwords.model.dto.output.LoginResult;
 import com.jdc.jpwords.model.service.AppLoginService;
@@ -25,7 +26,7 @@ public class SecurityApi {
 			BindingResult result) {
 		
 		if(result.hasErrors()) {
-			// TODO
+			throw new JpwordsVaildationException(result);
 		}
 		
 		return service.login(form);
