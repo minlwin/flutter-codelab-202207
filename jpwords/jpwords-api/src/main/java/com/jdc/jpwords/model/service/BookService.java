@@ -24,11 +24,6 @@ public class BookService {
 	@Autowired
 	private BookRepo repo;
 
-	public List<BookDto> search(Optional<Level> level, Optional<String> keyword) {
-		return repo.findAll(fromOptional(level, this::byLevel).and(fromOptional(keyword, this::byKeyword)))
-				.stream().map(BookDto::from).toList();
-	}
-
 	public BookDto findById(int id) {
 		return repo.findById(id).map(BookDto::from).orElseThrow(() -> new JpwordsNotFoundException(Book.class, id));
 	}
@@ -38,6 +33,11 @@ public class BookService {
 		return Optional.of(repo.save(dto.entity())).map(BookDto::from).orElseThrow(() -> new JpwordsNotFoundException(Book.class, dto.id()));
 	}
 		
+	public List<BookDto> search(Optional<Level> level, Optional<String> keyword) {
+		return repo.findAll(fromOptional(level, this::byLevel).and(fromOptional(keyword, this::byKeyword)))
+				.stream().map(BookDto::from).toList();
+	}
+
 	private Specification<Book> byLevel(Level level) {
 		return (root, query, builder) -> builder.equal(root.get("level"), level);
 	}
