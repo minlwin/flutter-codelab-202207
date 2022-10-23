@@ -1,7 +1,5 @@
 package com.jdc.jpwords.model.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Lesson implements Serializable{
+public class Lesson extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
 	

@@ -6,8 +6,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.jdc.jpwords.model.dto.input.LoginForm;
-import com.jdc.jpwords.model.dto.output.LoginResult;
+import com.jdc.jpwords.model.JpwordsBusinessException;
+import com.jdc.jpwords.model.dto.form.LoginForm;
+import com.jdc.jpwords.model.dto.result.LoginResult;
+import com.jdc.jpwords.model.entity.Account;
 import com.jdc.jpwords.model.repo.AccountRepo;
 
 @Service
@@ -24,6 +26,11 @@ public class AppLoginService {
 		return repo.findOneByEmail(form.email())
 				.map(LoginResult::new)
 				.orElseThrow();
+	}
+	
+	public Account getLoginUser() {
+		return repo.findOneByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+				.orElseThrow(() -> new JpwordsBusinessException("There is no login user."));
 	}
 
 }

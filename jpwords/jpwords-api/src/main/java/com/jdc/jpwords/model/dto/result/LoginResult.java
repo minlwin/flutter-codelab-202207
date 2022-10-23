@@ -1,4 +1,4 @@
-package com.jdc.jpwords.model.dto.output;
+package com.jdc.jpwords.model.dto.result;
 
 import com.jdc.jpwords.model.entity.Account;
 import com.jdc.jpwords.model.entity.Account.Role;

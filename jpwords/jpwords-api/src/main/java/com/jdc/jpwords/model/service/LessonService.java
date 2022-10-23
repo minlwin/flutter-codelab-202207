@@ -1,6 +1,6 @@
 package com.jdc.jpwords.model.service;
 
-import static com.jdc.jpwords.model.service.utils.SpecificationUtils.fromOptional;
+import static com.jdc.jpwords.model.service.utils.SpecificationUtils.spec;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +10,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.jpwords.api.advices.JpwordsNotFoundException;
+import com.jdc.jpwords.model.JpwordsNotFoundException;
 import com.jdc.jpwords.model.dto.LessonDto;
-import com.jdc.jpwords.model.dto.input.LessonForm;
+import com.jdc.jpwords.model.dto.form.LessonForm;
 import com.jdc.jpwords.model.entity.Lesson;
 import com.jdc.jpwords.model.repo.BookRepo;
 import com.jdc.jpwords.model.repo.LessonRepo;
@@ -42,7 +42,7 @@ public class LessonService {
 	}
 
 	public List<LessonDto> search(Optional<Integer> bookId, Optional<String> keyword) {
-		return repo.findAll(fromOptional(bookId, this::byBookId).and(fromOptional(keyword, this::byKeyword)))
+		return repo.findAll(spec(bookId, this::byBookId).and(spec(keyword, this::byKeyword)))
 				.stream().map(LessonDto::from).toList();
 	}
 	

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.jpwords.api.advices.JpwordsVaildationException;
-import com.jdc.jpwords.model.dto.input.LoginForm;
-import com.jdc.jpwords.model.dto.output.LoginResult;
+import com.jdc.jpwords.model.JpwordsVaildationException;
+import com.jdc.jpwords.model.dto.form.LoginForm;
+import com.jdc.jpwords.model.dto.result.LoginResult;
 import com.jdc.jpwords.model.service.AppLoginService;
 
 @RestController

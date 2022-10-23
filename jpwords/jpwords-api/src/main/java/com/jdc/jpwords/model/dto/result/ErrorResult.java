@@ -1,4 +1,4 @@
-package com.jdc.jpwords.model.dto.output;
+package com.jdc.jpwords.model.dto.result;
 
 import java.util.List;
 

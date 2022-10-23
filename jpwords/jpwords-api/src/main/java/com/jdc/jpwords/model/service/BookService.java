@@ -1,7 +1,7 @@
 package com.jdc.jpwords.model.service;
 
 
-import static com.jdc.jpwords.model.service.utils.SpecificationUtils.fromOptional;
+import static com.jdc.jpwords.model.service.utils.SpecificationUtils.spec;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jdc.jpwords.api.advices.JpwordsNotFoundException;
+import com.jdc.jpwords.model.JpwordsNotFoundException;
 import com.jdc.jpwords.model.dto.BookDto;
 import com.jdc.jpwords.model.entity.Book;
 import com.jdc.jpwords.model.entity.Book.Level;
@@ -34,7 +34,7 @@ public class BookService {
 	}
 		
 	public List<BookDto> search(Optional<Level> level, Optional<String> keyword) {
-		return repo.findAll(fromOptional(level, this::byLevel).and(fromOptional(keyword, this::byKeyword)))
+		return repo.findAll(spec(level, this::byLevel).and(spec(keyword, this::byKeyword)))
 				.stream().map(BookDto::from).toList();
 	}
 

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.jpwords.api.advices.JpwordsVaildationException;
+import com.jdc.jpwords.model.JpwordsVaildationException;
 import com.jdc.jpwords.model.dto.LessonDto;
-import com.jdc.jpwords.model.dto.input.LessonForm;
+import com.jdc.jpwords.model.dto.form.LessonForm;
 import com.jdc.jpwords.model.service.LessonService;
 
 @RestController

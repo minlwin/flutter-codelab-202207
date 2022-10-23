@@ -1,4 +1,4 @@
-package com.jdc.jpwords.api.advices;
+package com.jdc.jpwords.model;
 
 import java.util.List;
 

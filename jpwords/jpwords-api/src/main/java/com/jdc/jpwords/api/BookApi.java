@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jdc.jpwords.api.advices.JpwordsVaildationException;
+import com.jdc.jpwords.model.JpwordsVaildationException;
 import com.jdc.jpwords.model.dto.BookDto;
 import com.jdc.jpwords.model.entity.Book.Level;
 import com.jdc.jpwords.model.service.BookService;

@@ -1,6 +1,5 @@
 package com.jdc.jpwords.model.entity;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Words implements Serializable{
-	
+public class Words extends AbstractEntity {
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,8 @@ public class Words implements Serializable{
 	@ElementCollection
 	private List<String> definition;
 
+	private boolean approved;
+	
 	public long getId() {
 		return id;
 	}
@@ -65,6 +66,14 @@ public class Words implements Serializable{
 
 	public void setLesson(Lesson lesson) {
 		this.lesson = lesson;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.jdc.jpwords.model.dto.input;
+package com.jdc.jpwords.model.dto.form;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
