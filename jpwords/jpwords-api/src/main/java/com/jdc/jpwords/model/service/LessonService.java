@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.jpwords.model.JpwordsNotFoundException;
-import com.jdc.jpwords.model.dto.LessonDto;
 import com.jdc.jpwords.model.dto.form.LessonForm;
+import com.jdc.jpwords.model.dto.result.LessonResult;
 import com.jdc.jpwords.model.entity.Lesson;
 import com.jdc.jpwords.model.repo.BookRepo;
 import com.jdc.jpwords.model.repo.LessonRepo;
@@ -27,23 +27,29 @@ public class LessonService {
 	private BookRepo bookRepo;
 
 	@Transactional
-	public LessonDto save(LessonForm form) {
-		
-		var lesson = repo.findById(form.id()).orElse(new Lesson());
-		lesson.setTitle(form.title());
-		lesson.setDescription(form.description());
+	public LessonResult save(LessonForm form) {
+		var lesson = form.entity();
 		lesson.setBook(bookRepo.getReferenceById(form.bookId()));
-		
-		return LessonDto.from(repo.save(lesson));
+		return LessonResult.from(repo.save(lesson));
 	}
 
-	public LessonDto findById(int id) {
-		return repo.findById(id).map(LessonDto::from).orElseThrow(() -> new JpwordsNotFoundException(Lesson.class, id));
+	@Transactional
+	public LessonResult update(int id, LessonForm form) {
+		return repo.findById(id).map(entity -> {
+			entity.setTitle(form.title());
+			entity.setDescription(form.description());
+			entity.setBook(bookRepo.getReferenceById(form.bookId()));
+			return entity;
+		}).map(LessonResult::from).orElseThrow(() -> new JpwordsNotFoundException(Lesson.class, id));
 	}
 
-	public List<LessonDto> search(Optional<Integer> bookId, Optional<String> keyword) {
+	public LessonResult findById(int id) {
+		return repo.findById(id).map(LessonResult::from).orElseThrow(() -> new JpwordsNotFoundException(Lesson.class, id));
+	}
+
+	public List<LessonResult> search(Optional<Integer> bookId, Optional<String> keyword) {
 		return repo.findAll(spec(bookId, this::byBookId).and(spec(keyword, this::byKeyword)))
-				.stream().map(LessonDto::from).toList();
+				.stream().map(LessonResult::from).toList();
 	}
 	
 	private Specification<Lesson> byBookId(int id) {
@@ -56,5 +62,6 @@ public class LessonService {
 				builder.like(builder.lower(root.get("description")), "%%%s%%".formatted(keyword.toLowerCase())) 
 				);
 	}
+
 
 }

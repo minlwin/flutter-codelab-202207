@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.jpwords.model.JpwordsVaildationException;
-import com.jdc.jpwords.model.dto.LessonDto;
 import com.jdc.jpwords.model.dto.form.LessonForm;
+import com.jdc.jpwords.model.dto.result.LessonResult;
 import com.jdc.jpwords.model.service.LessonService;
 
 @RestController
@@ -28,7 +28,7 @@ public class LessonApi {
 	private LessonService service;
 
 	@GetMapping
-	List<LessonDto> search(
+	List<LessonResult> search(
 			@RequestParam Optional<Integer> bookId,
 			@RequestParam Optional<String> keyword
 	) {
@@ -36,24 +36,24 @@ public class LessonApi {
 	}
 	
 	@GetMapping("{id}")
-	LessonDto findById(@PathVariable int id) {
+	LessonResult findById(@PathVariable int id) {
 		return service.findById(id);
 	}
 	
 	@PostMapping
-	LessonDto create(@RequestBody @Validated LessonForm form, BindingResult result) {
+	LessonResult create(@RequestBody @Validated LessonForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			throw new JpwordsVaildationException(result);
 		}
 		return service.save(form);
 	}
 	
-	@PutMapping
-	LessonDto update(@RequestBody @Validated LessonForm form, BindingResult result) {
+	@PutMapping("{id}")
+	LessonResult update(@PathVariable int id, @RequestBody @Validated LessonForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			throw new JpwordsVaildationException(result);
 		}
-		return service.save(form);
+		return service.update(id, form);
 	}
 	
 }

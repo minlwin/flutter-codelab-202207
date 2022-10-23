@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Words extends AbstractEntity {
@@ -28,6 +29,20 @@ public class Words extends AbstractEntity {
 
 	private boolean approved;
 	
+	@OneToMany(mappedBy = "word")
+	private List<Review> review;
+	
+	public Words() {
+	}
+	
+	public Words(String word, String phonetic, List<String> definition, boolean approved) {
+		super();
+		this.word = word;
+		this.phonetic = phonetic;
+		this.definition = definition;
+		this.approved = approved;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -74,6 +89,14 @@ public class Words extends AbstractEntity {
 
 	public void setApproved(boolean approved) {
 		this.approved = approved;
+	}
+
+	public List<Review> getReview() {
+		return review;
+	}
+
+	public void setReview(List<Review> review) {
+		this.review = review;
 	}
 
 }

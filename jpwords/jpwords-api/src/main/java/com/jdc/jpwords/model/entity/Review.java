@@ -10,11 +10,11 @@ import javax.persistence.ManyToOne;
 public class Review extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@ManyToOne(optional = false)
 	private Words word;
 	@ManyToOne(optional = false)
@@ -25,6 +25,15 @@ public class Review extends AbstractEntity {
 
 	public enum Vote {
 		Approve, Denied
+	}
+
+	public Review() {
+	}
+
+	public Review(Vote vote, String remark) {
+		super();
+		this.vote = vote;
+		this.remark = remark;
 	}
 
 	public long getId() {
