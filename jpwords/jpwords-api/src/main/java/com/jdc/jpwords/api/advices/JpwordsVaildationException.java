@@ -16,6 +16,10 @@ public class JpwordsVaildationException extends RuntimeException{
 				.toList();
 	}
 	
+	protected JpwordsVaildationException(List<String> messages) {
+		this.messages = messages;
+	}
+	
 	public List<String> getMessages() {
 		return messages;
 	}

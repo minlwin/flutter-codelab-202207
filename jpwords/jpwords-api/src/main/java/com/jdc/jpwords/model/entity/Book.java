@@ -9,10 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Book implements Serializable{
+public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -21,6 +21,17 @@ public class Book implements Serializable{
 	@Column(nullable = false)
 	private Level level;
 	private String description;
+
+	public Book() {
+	}
+
+	public Book(int id, String title, Level level, String description) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.level = level;
+		this.description = description;
+	}
 
 	public enum Level {
 		N5, N4, N3, N2, N1
