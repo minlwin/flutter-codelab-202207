@@ -46,7 +46,7 @@ public class WordApi {
 	}
 	
 	@PutMapping("{id}")
-	WordResult update(@PathVariable int id, @RequestBody @Validated WordForm form, BindingResult result) {
+	WordResult update(@PathVariable long id, @RequestBody @Validated WordForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			throw new JpwordsVaildationException(result);
 		}
@@ -54,7 +54,7 @@ public class WordApi {
 	}
 	
 	@GetMapping("{id}")
-	WordDetailsResult findById(@PathVariable int id) {
+	WordDetailsResult findById(@PathVariable long id) {
 		return service.findById(id);
 	}
 

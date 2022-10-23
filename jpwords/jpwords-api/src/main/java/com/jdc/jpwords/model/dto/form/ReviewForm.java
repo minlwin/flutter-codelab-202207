@@ -9,7 +9,7 @@ import com.jdc.jpwords.model.entity.Review.Vote;
 
 public record ReviewForm(
 		@Min(value = 1, message = "Please select word.")
-		int wordId,
+		long wordId,
 		@Min(value = 1, message = "Please define reviewr.")
 		int reviewerId,
 		@NotNull(message = "Please select vote.")
