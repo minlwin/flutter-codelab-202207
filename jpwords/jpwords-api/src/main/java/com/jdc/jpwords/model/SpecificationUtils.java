@@ -1,4 +1,4 @@
-package com.jdc.jpwords.model.service.utils;
+package com.jdc.jpwords.model;
 
 import java.util.Optional;
 import java.util.function.Function;

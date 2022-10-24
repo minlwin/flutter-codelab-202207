@@ -1,7 +1,7 @@
 package com.jdc.jpwords.model.service;
 
 
-import static com.jdc.jpwords.model.service.utils.SpecificationUtils.spec;
+import static com.jdc.jpwords.model.SpecificationUtils.spec;
 
 import java.util.List;
 import java.util.Optional;
