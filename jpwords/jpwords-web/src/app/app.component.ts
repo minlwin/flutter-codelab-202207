@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { SecurityContext } from './services/security/security.context';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styles: []
 })
 export class AppComponent {
-  title = 'jpwords-web';
+
+  constructor(security:SecurityContext, router:Router) {
+    router.navigate([security.isLogin() ? 'members' : 'anonymous'])
+  }
 }

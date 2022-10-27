@@ -1,1 +1,17 @@
-<p>anonymous works!</p>
+<nav class="navbar navbar-expand navbar-dark bg-primary">
+
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand">Japanese Words</a>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a [routerLink]="['login']" routerLinkActive="active"  class="nav-link">
+          <i class="bi bi-unlock"></i> Sign In
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+
+<router-outlet></router-outlet>
