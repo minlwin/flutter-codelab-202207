@@ -5,6 +5,7 @@ import { AnonymousRoutingModule } from './anonymous-routing.module';
 import { AnonymousComponent } from './anonymous.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     CommonModule,
-    AnonymousRoutingModule
+    AnonymousRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AnonymousModule { }
