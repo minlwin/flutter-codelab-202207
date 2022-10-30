@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecurityContext } from './services/security/security.context';
+import { ApplicationSecurity } from './services/security/application.security';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import { SecurityContext } from './services/security/security.context';
 })
 export class AppComponent {
 
-  constructor(security:SecurityContext, router:Router) {
+  constructor(security:ApplicationSecurity, router:Router) {
     router.navigate([security.isLogin() ? 'members' : 'anonymous'])
   }
 }

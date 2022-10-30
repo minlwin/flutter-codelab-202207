@@ -5,9 +5,13 @@ const loginUserKey = 'jdc.jpwords.login.usr'
 const loginToken = 'jdc.jpwords.login.token'
 
 @Injectable({providedIn: 'root'})
-export class SecurityContext {
+export class ApplicationSecurity {
 
   private login:LoginUser | null = null
+
+  signOut() {
+    localStorage.clear()
+  }
 
   isLogin():boolean {
     return this.getLoginUser() != null && this.getLoginToken() != null
@@ -29,7 +33,7 @@ export class SecurityContext {
     return localStorage.getItem(loginToken)
   }
 
-  setLoginToken(token?:string) {
+  setLoginToken(token:string | null) {
     if(token) {
       localStorage.setItem(loginToken, token)
     } else {
