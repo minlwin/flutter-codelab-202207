@@ -14,10 +14,9 @@ export class BookDetailsComponent implements OnInit {
   constructor(private route:ActivatedRoute, private service:BookService) { }
 
   ngOnInit(): void {
-    this.route.queryParamMap.subscribe(map => {
-      let id = map.get('id')
-      if(id) {
-        this.service.findById(Number.parseInt(id)).subscribe(result => {
+    this.route.queryParams.subscribe(param => {
+      if(param['id']) {
+        this.service.findById(Number.parseInt(param['id'])).subscribe(result => {
           this.dto = result
         })
       }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/api/login.service';
 import { ApplicationSecurity } from 'src/app/services/security/application.security';
 
@@ -11,10 +11,12 @@ import { ApplicationSecurity } from 'src/app/services/security/application.secur
 export class LoginComponent implements OnInit {
 
   form:FormGroup
+  message?:string
 
   constructor(builder:FormBuilder,
     private service:LoginService,
     private security:ApplicationSecurity,
+    private route:ActivatedRoute,
     private router:Router) {
     this.form = builder.group({
       email: ['', Validators.required],
@@ -23,6 +25,10 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      console.log(`Error Message is ${params['message']}`)
+      this.message = params['message']
+    })
   }
 
   login() {

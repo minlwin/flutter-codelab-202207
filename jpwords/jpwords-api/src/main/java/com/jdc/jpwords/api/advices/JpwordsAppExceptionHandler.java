@@ -12,9 +12,10 @@ import com.jdc.jpwords.model.dto.result.ErrorResult.Type;
 @RestControllerAdvice
 public class JpwordsAppExceptionHandler {
 
-	@ExceptionHandler
+	@ExceptionHandler(JpwordsVaildationException.class)
 	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 	ErrorResult handle(JpwordsVaildationException e) {
 		return new ErrorResult(Type.Validation, e.getMessages());
 	}
+	
 }

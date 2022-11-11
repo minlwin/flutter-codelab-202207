@@ -29,7 +29,11 @@ public class AppTokenFilter extends OncePerRequestFilter{
 		var token = request.getHeader(tokenName);
 		
 		if(StringUtils.hasLength(token)) {
-			provider.authenticate(token);
+			try {
+				provider.authenticate(token);
+			} catch (Exception e) {
+				System.out.println("Bad Token, continue request.");
+			}
 		}
 		
 		filterChain.doFilter(request, response);	

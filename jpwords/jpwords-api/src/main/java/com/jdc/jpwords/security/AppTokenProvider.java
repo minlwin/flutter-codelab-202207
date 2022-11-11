@@ -45,20 +45,16 @@ public class AppTokenProvider {
 
 	public void authenticate(String token) {
 		
-		try {
-			var result = Jwts.parserBuilder()
-					.requireIssuer(issuer)
-					.setSigningKey(key)
-					.build().parseClaimsJws(token);
-				
-				var auth = new UsernamePasswordAuthenticationToken(
-						result.getBody().getSubject(), null, 
-						AuthorityUtils.commaSeparatedStringToAuthorityList(result.getBody().get("rol").toString()));
-				
-				SecurityContextHolder.getContext().setAuthentication(auth);
-		} catch (Exception e) {
+		var result = Jwts.parserBuilder()
+				.requireIssuer(issuer)
+				.setSigningKey(key)
+				.build().parseClaimsJws(token);
 			
-		}
+			var auth = new UsernamePasswordAuthenticationToken(
+					result.getBody().getSubject(), null, 
+					AuthorityUtils.commaSeparatedStringToAuthorityList(result.getBody().get("rol").toString()));
+			
+			SecurityContextHolder.getContext().setAuthentication(auth);
 
 	}
 

@@ -16,12 +16,12 @@
 
             <div class="mb-3">
               <label class="form-label">Book Title</label>
-              <input type="text" formControlName="title" class="form-control" placeholder="Enter Book Title">
+              <input formControlName="title" type="text" formControlName="title" class="form-control" placeholder="Enter Book Title">
             </div>
 
             <div>
               <label class="form-label">Description</label>
-              <textarea class="form-control" placeholder="Enter Description" cols="20" rows="4"></textarea>
+              <textarea formControlName="description" class="form-control" placeholder="Enter Description" cols="20" rows="4"></textarea>
             </div>
         </form>
 
@@ -29,7 +29,7 @@
           <button class="btn btn-outline-primary" data-bs-dismiss="modal">
             <i class="bi bi-x-lg"></i> Close
           </button>
-          <button class="btn btn-outline-danger">
+          <button (click)="save()" class="btn btn-outline-danger">
             <i class="bi bi-save"></i> Save
           </button>
 

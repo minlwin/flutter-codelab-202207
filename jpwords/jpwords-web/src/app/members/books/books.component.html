@@ -39,18 +39,18 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let item of list">
+    <tr *ngFor="let item of list" class="align-middle">
       <td>{{item.id}}</td>
       <td>{{item.title}}</td>
       <td>{{item.level}}</td>
       <td>{{item.description}}</td>
       <td>
-        <a href="">
-
+        <a class="btn btn-link" [routerLink]="['../', 'details']" [queryParams]="{id: item.id}" >
+          <i class="bi bi-send"></i>
         </a>
       </td>
     </tr>
   </tbody>
 </table>
 
-<app-book-edit></app-book-edit>
+<app-book-edit (saveData)="save($event)"></app-book-edit>

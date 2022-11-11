@@ -1,8 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { fixed_levels } from 'src/app/services';
-import { BookService } from 'src/app/services/api/book.service';
 
 @Component({
   selector: 'app-book-edit',
@@ -13,6 +11,9 @@ import { BookService } from 'src/app/services/api/book.service';
 export class BookEditComponent implements OnInit {
 
   form:FormGroup
+
+  @Output("saveData")
+  emitter = new EventEmitter<any>
 
   @Input()
   set dto(data: any) {
@@ -28,7 +29,7 @@ export class BookEditComponent implements OnInit {
     }
   }
 
-  constructor(builder:FormBuilder, private service:BookService, private router:Router) {
+  constructor(builder:FormBuilder) {
     this.form = builder.group({
       id: 0,
       title: ['', Validators.required],
@@ -43,9 +44,7 @@ export class BookEditComponent implements OnInit {
 
   save() {
     if(this.form.valid) {
-      this.service.save(this.form.value).subscribe(result => {
-        this.router.navigate(['details'], {queryParams: {id: result.id}})
-      })
+      this.emitter.emit(this.form.value)
     }
   }
 

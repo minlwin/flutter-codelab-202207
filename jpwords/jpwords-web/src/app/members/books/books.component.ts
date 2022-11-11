@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { fixed_levels } from 'src/app/services';
 import { BookService } from 'src/app/services/api/book.service';
 
@@ -25,6 +26,7 @@ export class BooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.modalDialog = new bootstrap.Modal('#bookEditModal', { backdrop : false })
+    this.search()
   }
 
   search() {
@@ -42,7 +44,10 @@ export class BooksComponent implements OnInit {
   }
 
   save(form:any) {
-
+    this.service.save(form).subscribe(() => {
+      this.search()
+      this.modalDialog.hide()
+    })
   }
 
 }

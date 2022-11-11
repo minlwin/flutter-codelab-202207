@@ -7,6 +7,6 @@ public record ErrorResult(
 		List<String> messages) {
 
 	public enum Type {
-		Validation, Business, Platform
+		Validation, Business, Platform, Security
 	}
 }
