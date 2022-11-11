@@ -1,1 +1,22 @@
-<p>home works!</p>
+<h3 class="mb-3"><i class="bi bi-bookmark-heart"></i> Japanese Words</h3>
+
+<form [formGroup]="form" class="row mb-4">
+  <div class="col-2">
+    <label class="form-label">Level</label>
+    <select formControlName="level" class="form-select">
+      <option value="">All Level</option>
+      <option *ngFor="let level of levels" [value]="level">{{level}} Level</option>
+    </select>
+  </div>
+
+  <div class="col-4">
+    <label class="form-label">Keyword</label>
+    <input formControlName="keyword" type="text" class="form-control" placeholder="Search Keyword">
+  </div>
+
+  <div class="col-auto btn-wrapper">
+    <button (click)="search()" class="btn btn-outline-primary me-2">
+      <i class="bi bi-search"></i> Search
+    </button>
+  </div>
+</form>

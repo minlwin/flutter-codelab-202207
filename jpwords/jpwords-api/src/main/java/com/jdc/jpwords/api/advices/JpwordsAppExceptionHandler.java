@@ -13,7 +13,7 @@ import com.jdc.jpwords.model.dto.result.ErrorResult.Type;
 public class JpwordsAppExceptionHandler {
 
 	@ExceptionHandler
-	@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
+	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
 	ErrorResult handle(JpwordsVaildationException e) {
 		return new ErrorResult(Type.Validation, e.getMessages());
 	}

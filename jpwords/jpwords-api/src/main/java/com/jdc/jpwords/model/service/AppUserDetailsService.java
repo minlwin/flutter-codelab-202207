@@ -22,7 +22,6 @@ public class AppUserDetailsService implements UserDetailsService{
 				.map(account -> User.builder()
 						.username(email)
 						.password(account.getPassword())
-						.disabled(!account.isActivated())
 						.accountExpired(account.isExpired())
 						.authorities(AuthorityUtils.commaSeparatedStringToAuthorityList(account.getRole().name()))
 						.build())

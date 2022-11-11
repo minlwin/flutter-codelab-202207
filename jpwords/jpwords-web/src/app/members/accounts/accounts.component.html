@@ -1,1 +1,63 @@
-<p>accounts works!</p>
+<h3 class="mb-3"><i class="bi bi-people"></i> Members Management</h3>
+
+<form [formGroup]="form" class="row mb-4">
+
+  <div class="col-2">
+    <label class="form-label">Role</label>
+    <select formControlName="role" class="form-select">
+      <option value="">All Role</option>
+      <option value="Admin">Admin</option>
+      <option value="Member">Member</option>
+    </select>
+  </div>
+
+  <div class="col-4">
+    <label class="form-label">Search Name</label>
+    <input formControlName="name" type="text" placeholder="Search Member Name" class="form-control">
+  </div>
+
+  <div class="col-auto btn-wrapper">
+    <button (click)="search()" class="btn btn-outline-primary me-2">
+      <i class="bi bi-search"></i> Search
+    </button>
+
+    <a (click)="addNew()" class="btn btn-outline-danger">
+      <i class="bi bi-plus-lg"></i> Add Member
+    </a>
+  </div>
+
+</form>
+
+<table *ngIf="list.length > 0" class="table table-striped">
+
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Email</th>
+      <th>Expired</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of list" class="align-middle">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.role}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.expired}}</td>
+      <td>
+        <a href="#" class="btn btn-link" (click)="edit(item)" >
+          <i class="bi bi-pencil"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
+
+<app-no-data dataName="Book" *ngIf="list.length == 0"></app-no-data>
+
+<app-account-edit [account]="target" (dto)="save($event)"></app-account-edit>

@@ -16,32 +16,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.jpwords.model.JpwordsVaildationException;
-import com.jdc.jpwords.model.dto.form.WordForm;
-import com.jdc.jpwords.model.dto.result.WordDetailsResult;
-import com.jdc.jpwords.model.dto.result.WordResult;
-import com.jdc.jpwords.model.service.WordService;
-
-import ch.qos.logback.classic.Level;
+import com.jdc.jpwords.model.dto.form.AccountForm;
+import com.jdc.jpwords.model.dto.result.AccountResult;
+import com.jdc.jpwords.model.entity.Account.Role;
+import com.jdc.jpwords.model.service.AccountService;
 
 @RestController
-@RequestMapping("word")
-public class WordApi {
+@RequestMapping("account")
+public class AccountApi {
 	
 	@Autowired
-	private WordService service;
+	private AccountService service;
 
 	@GetMapping
-	List<WordResult> search(
-			@RequestParam Optional<Level> level,
-			@RequestParam Optional<Integer> bookId,
-			@RequestParam Optional<Integer> lessonId,
-			@RequestParam Optional<String> keyword
-			) {
-		return service.search(level, bookId, lessonId, keyword);
+	List<AccountResult> search(@RequestParam Optional<Role> role, @RequestParam Optional<String> name) {
+		return service.search(role, name);
 	}
 	
 	@PostMapping
-	WordResult create(@RequestBody @Validated WordForm form, BindingResult result) {
+	AccountResult create(@RequestBody AccountForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			throw new JpwordsVaildationException(result);
 		}
@@ -49,7 +42,7 @@ public class WordApi {
 	}
 	
 	@PutMapping("{id}")
-	WordResult update(@PathVariable long id, @RequestBody @Validated WordForm form, BindingResult result) {
+	AccountResult update(@PathVariable int id, @RequestBody @Validated AccountForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			throw new JpwordsVaildationException(result);
 		}
@@ -57,8 +50,7 @@ public class WordApi {
 	}
 	
 	@GetMapping("{id}")
-	WordDetailsResult findById(@PathVariable long id) {
+	AccountResult findById(@PathVariable int id) {
 		return service.findById(id);
 	}
-
 }

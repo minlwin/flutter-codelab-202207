@@ -1,0 +1,39 @@
+<div class="modal fade" id="bookEditModal" tabindex="-1">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5><i class="bi bi-pencil"></i> {{title}} Book</h5>
+        </div>
+
+        <form [formGroup]="form" class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Level</label>
+              <select formControlName="level" class="form-select">
+                <option value="">Select Level</option>
+                <option *ngFor="let level of levels" [value]="level">{{level}} Level</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Book Title</label>
+              <input type="text" formControlName="title" class="form-control" placeholder="Enter Book Title">
+            </div>
+
+            <div>
+              <label class="form-label">Description</label>
+              <textarea class="form-control" placeholder="Enter Description" cols="20" rows="4"></textarea>
+            </div>
+        </form>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline-primary" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i> Close
+          </button>
+          <button class="btn btn-outline-danger">
+            <i class="bi bi-save"></i> Save
+          </button>
+
+        </div>
+      </div>
+  </div>
+</div>

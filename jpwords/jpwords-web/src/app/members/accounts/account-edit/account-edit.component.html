@@ -1,0 +1,47 @@
+<div class="modal fade" id="accountEditModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5><i class="bi bi-pencil"></i> Edit Member</h5>
+      </div>
+
+      <form [formGroup]="form" class="modal-body">
+
+        <div class="mb-3">
+          <label class="form-label">Role</label>
+          <select formControlName="role" class="form-select">
+            <option value="">Select Role</option>
+            <option value="Member">Member</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" placeholder="Enter Name" formControlName="name" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email Address</label>
+          <input type="email" placeholder="Enter Name" formControlName="email" class="form-control">
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="expired" formControlName="expired" class="form-check-input">
+          <label for="expired" class="form-check-label">{{form.get('expired')?.value ? 'Expired' : 'Valid'}}</label>
+        </div>
+
+      </form>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-primary" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i> Close
+        </button>
+        <button class="btn btn-outline-danger" [class.disabled]="!form.valid" (click)="save()">
+          <i class="bi bi-save"></i> Save
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

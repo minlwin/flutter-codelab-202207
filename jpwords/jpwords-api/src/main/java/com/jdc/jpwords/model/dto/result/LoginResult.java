@@ -6,11 +6,10 @@ import com.jdc.jpwords.model.entity.Account.Role;
 public record LoginResult(
 		String name,
 		String email,
-		Role role,
-		boolean activated
+		Role role
 ) {
 
 	public LoginResult(Account account) {
-		this(account.getName(), account.getEmail(), account.getRole(), account.isActivated());
+		this(account.getName(), account.getEmail(), account.getRole());
 	}
 }

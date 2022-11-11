@@ -28,7 +28,6 @@ public class AdminUserInitializer {
 		
 		if(repo.count() == 0) {
 			var user = new Account();
-			user.setActivated(true);
 			user.setRole(Role.Admin);
 			user.setName(name);
 			user.setPassword(encoder.encode(password));

@@ -1,1 +1,56 @@
-<p>books works!</p>
+<h3 class="mb-3"><i class="bi bi-book"></i> Book Management</h3>
+
+<form [formGroup]="form" class="row mb-4">
+  <div class="col-2">
+    <label class="form-label">Level</label>
+    <select formControlName="level" class="form-select">
+      <option value="">All Level</option>
+      <option *ngFor="let level of levels" [value]="level">{{level}} Level</option>
+    </select>
+  </div>
+
+  <div class="col-4">
+    <label class="form-label">Keyword</label>
+    <input formControlName="keyword" type="text" class="form-control" placeholder="Search Keyword">
+  </div>
+
+  <div class="col-auto btn-wrapper">
+    <button (click)="search()" class="btn btn-outline-primary me-2">
+      <i class="bi bi-search"></i> Search
+    </button>
+
+    <a (click)="addNew()" class="btn btn-outline-danger">
+      <i class="bi bi-plus-lg"></i> Add Book
+    </a>
+  </div>
+</form>
+
+<app-no-data dataName="Book" *ngIf="list.length == 0"></app-no-data>
+
+<table *ngIf="list.length > 0" class="table table-hover table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>TITLE</th>
+      <th>LEVEL</th>
+      <th>DESCRIPTION</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of list">
+      <td>{{item.id}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.level}}</td>
+      <td>{{item.description}}</td>
+      <td>
+        <a href="">
+
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<app-book-edit></app-book-edit>

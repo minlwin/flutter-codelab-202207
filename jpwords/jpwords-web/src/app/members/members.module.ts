@@ -5,9 +5,12 @@ import { MembersRoutingModule } from './members-routing.module';
 import { MembersComponent } from './members.component';
 import { HomeComponent } from './home/home.component';
 import { BooksComponent } from './books/books.component';
-import { LessonsComponent } from './lessons/lessons.component';
 import { AccountsComponent } from './accounts/accounts.component';
-import { WordsComponent } from './words/words.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BookEditComponent } from './books/book-edit/book-edit.component';
+import { BookDetailsComponent } from './books/book-details/book-details.component';
+import { ServicesModule } from '../services/services.module';
+import { AccountEditComponent } from './accounts/account-edit/account-edit.component';
 
 
 @NgModule({
@@ -15,13 +18,16 @@ import { WordsComponent } from './words/words.component';
     MembersComponent,
     HomeComponent,
     BooksComponent,
-    LessonsComponent,
     AccountsComponent,
-    WordsComponent
+    BookEditComponent,
+    BookDetailsComponent,
+    AccountEditComponent
   ],
   imports: [
     CommonModule,
-    MembersRoutingModule
+    MembersRoutingModule,
+    ReactiveFormsModule,
+    ServicesModule
   ]
 })
 export class MembersModule { }

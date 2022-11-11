@@ -21,9 +21,19 @@ public class Account extends AbstractEntity {
 	private String name;
 	@Column(nullable = false)
 	private String password;
-	private boolean activated;
 	private boolean expired;
 	private Role role;
+
+	public Account() {
+	}
+
+	public Account(String email, String name, boolean expired, Role role) {
+		super();
+		this.email = email;
+		this.name = name;
+		this.expired = expired;
+		this.role = role;
+	}
 
 	public enum Role {
 		Admin, Member
@@ -67,14 +77,6 @@ public class Account extends AbstractEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public boolean isActivated() {
-		return activated;
-	}
-
-	public void setActivated(boolean activated) {
-		this.activated = activated;
 	}
 
 	public boolean isExpired() {

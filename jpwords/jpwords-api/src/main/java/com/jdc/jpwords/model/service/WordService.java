@@ -18,6 +18,8 @@ import com.jdc.jpwords.model.entity.Words;
 import com.jdc.jpwords.model.repo.LessonRepo;
 import com.jdc.jpwords.model.repo.WordsRepo;
 
+import ch.qos.logback.classic.Level;
+
 @Service
 @Transactional(readOnly = true)
 public class WordService {
@@ -49,9 +51,13 @@ public class WordService {
 		return repo.findById(id).map(WordDetailsResult::from).orElseThrow(() -> new JpwordsNotFoundException(Words.class, id));
 	}
 
-	public List<WordResult> search(Optional<Integer> bookId, Optional<Integer> lessonId, Optional<String> keyword) {
-		return repo.findAll(spec(bookId, this::byBookId).and(spec(lessonId, this::byLessonId).and(spec(keyword, this::byKeyword))))
+	public List<WordResult> search(Optional<Level> level, Optional<Integer> bookId, Optional<Integer> lessonId, Optional<String> keyword) {
+		return repo.findAll(spec(level, this::byLevel).and(spec(bookId, this::byBookId).and(spec(lessonId, this::byLessonId).and(spec(keyword, this::byKeyword)))))
 				.stream().map(WordResult::from).toList();
+	}
+	
+	private Specification<Words> byLevel(Level level) {
+		return (root, query, cb) -> cb.equal(root.get("lesson").get("book").get("level"), level);
 	}
 	
 	private Specification<Words> byBookId(int id) {

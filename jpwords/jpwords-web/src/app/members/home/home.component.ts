@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { fixed_levels } from 'src/app/services';
 
 @Component({
   templateUrl: './home.component.html',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  form:FormGroup
+  list:any[] = []
+
+  constructor(builder:FormBuilder) {
+    this.form = builder.group({
+      level: '',
+      keyword: ''
+    })
+  }
 
   ngOnInit(): void {
   }
 
+  get levels() {
+    return fixed_levels
+  }
+
+
+  search() {
+
+  }
 }
