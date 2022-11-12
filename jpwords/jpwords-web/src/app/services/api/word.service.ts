@@ -10,7 +10,11 @@ export class WordService {
   constructor(private http:HttpClient) {}
 
   search(form:any) {
-    return this.http.get<any[]>(API, {params: form})
+
+    const {level, ... search} = form
+    const searchParam = level ? form : search
+
+    return this.http.get<any[]>(API, {params: searchParam})
   }
 
   findBiId(id:number) {

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { notEmptyArray } from 'src/app/services';
 
 @Component({
   selector: 'app-word-edit',
@@ -18,20 +17,33 @@ export class WordEditComponent implements OnInit {
   @Input()
   set dto(data:any) {
     this.clear()
-    this.form.patchValue(data)
+    const {definition, lesson, ... word} = data
+    this.form.patchValue(word)
+
+    if(null != definition && definition instanceof Array) {
+      this.definition.clear()
+      for(let item of definition) {
+        this.definition.push(this.builder.control(item, Validators.required))
+      }
+    }
+
+    if(lesson && lesson.id) {
+      this.form.patchValue({lessonId: lesson.id})
+    }
   }
 
   constructor(private builder:FormBuilder) {
     this.form = builder.group({
+      id: 0,
       word: ['', Validators.required],
       phonetic: ['', Validators.required],
       lessonId: [0, [Validators.required, Validators.min(1)]],
-      description: builder.array([], {validators: notEmptyArray})
+      definition: builder.array([])
     })
   }
 
   ngOnInit(): void {
-    this.addDescription()
+    this.addDefinition()
   }
 
   save() {
@@ -40,29 +52,31 @@ export class WordEditComponent implements OnInit {
     }
   }
 
-  get description():FormArray {
-    return this.form.get('description') as FormArray
+  get definition() {
+    return this.form.get('definition') as FormArray
   }
 
-  addDescription() {
-    this.description.push(this.builder.control('', [Validators.required]))
+  addDefinition() {
+    this.definition.push(this.builder.control("", Validators.required))
   }
 
-  removeDescription(index:number) {
-    this.description.removeAt(index)
-    if(this.description.length == 0) {
-      this.addDescription()
+  removeDefinition(index:number) {
+    this.definition.removeAt(index)
+    if(this.definition.length == 0) {
+      this.addDefinition()
     }
   }
 
   private clear() {
     this.form.patchValue({
+      id: 0,
       word: '',
       phonetic: '',
       lessonId: 0,
-      description: []
     })
-    this.addDescription()
+
+    this.definition.clear()
+    this.addDefinition()
   }
 
 }

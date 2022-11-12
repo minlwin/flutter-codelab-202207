@@ -60,9 +60,41 @@
       </div>
 
       <div class="card-body">
-        <div *ngIf="noTargetLesson" class="alert alert-info">
+        <div *ngIf="noLessonForWord" class="alert alert-info">
           Please select lesson to manage words for lesson.
         </div>
+
+        <div *ngIf="!noLessonForWord && words.length == 0" class="alert alert-info">
+          There is no words for [{{lessonForWord.title}}]. Please add words.
+        </div>
+
+        <table *ngIf="words.length > 0" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Phonetic</th>
+              <th>Definition</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of words">
+              <td>{{item.word}}</td>
+              <td>{{item.phonetic}}</td>
+              <td>
+                <ol>
+                  <li *ngFor="let definition of item.definition">{{definition}}</li>
+                </ol>
+              </td>
+              <td>
+                <a class="btn btn-link" (click)="editWord(item)">
+                  <i class="bi bi-pencil"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

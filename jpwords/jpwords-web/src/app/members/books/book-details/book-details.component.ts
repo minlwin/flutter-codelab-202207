@@ -20,6 +20,7 @@ export class BookDetailsComponent implements OnInit {
 
   words:any[] = []
   targetWord:any
+  lessonForWord:any
 
   bookEditDialog:any
   lessonEditDialog:any
@@ -67,11 +68,10 @@ export class BookDetailsComponent implements OnInit {
   }
 
   editWord(data:any) {
-    if(this.targetLesson) {
-      this.targetWord = data ? data : {lessonId: this.targetLesson.id}
+    if(!this.noLessonForWord) {
+      this.targetWord = data ? data : { lessonId : this.targetLesson.id }
       this.wordEditDialog.show()
     }
-    return false
   }
 
   saveWord(data:any) {
@@ -98,6 +98,7 @@ export class BookDetailsComponent implements OnInit {
 
       if(null == this.targetLesson && result.length > 0) {
         this.targetLesson = result[0]
+        this.lessonForWord = this.targetLesson
       }
 
       this.loadWords()
@@ -115,8 +116,8 @@ export class BookDetailsComponent implements OnInit {
     }
   }
 
-  get noTargetLesson():boolean {
-    return null == this.targetLesson || this.targetLesson.id == undefined || this.targetLesson.id == 0
+  get noLessonForWord():boolean {
+    return null == this.lessonForWord || this.lessonForWord.id == undefined || this.lessonForWord.id == 0
   }
 
 }
