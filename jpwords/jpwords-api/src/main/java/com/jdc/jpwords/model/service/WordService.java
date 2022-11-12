@@ -14,11 +14,11 @@ import com.jdc.jpwords.model.JpwordsNotFoundException;
 import com.jdc.jpwords.model.dto.form.WordForm;
 import com.jdc.jpwords.model.dto.result.WordDetailsResult;
 import com.jdc.jpwords.model.dto.result.WordResult;
+import com.jdc.jpwords.model.entity.Book.Level;
 import com.jdc.jpwords.model.entity.Words;
 import com.jdc.jpwords.model.repo.LessonRepo;
 import com.jdc.jpwords.model.repo.WordsRepo;
 
-import ch.qos.logback.classic.Level;
 
 @Service
 @Transactional(readOnly = true)

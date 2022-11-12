@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jdc.jpwords.model.JpwordsVaildationException;
 import com.jdc.jpwords.model.dto.form.LessonForm;
 import com.jdc.jpwords.model.dto.result.LessonResult;
 import com.jdc.jpwords.model.service.LessonService;
+import com.jdc.jpwords.model.service.LessonUploadService;
 
 @RestController
 @RequestMapping("lesson")
@@ -26,6 +28,9 @@ public class LessonApi {
 	
 	@Autowired
 	private LessonService service;
+	
+	@Autowired
+	private LessonUploadService uploadService;
 
 	@GetMapping
 	List<LessonResult> search(
@@ -54,6 +59,11 @@ public class LessonApi {
 			throw new JpwordsVaildationException(result);
 		}
 		return service.update(id, form);
+	}
+	
+	@PostMapping("upload/{bookId}")
+	List<LessonResult> upload(@PathVariable int bookId, @RequestParam MultipartFile file) {
+		return uploadService.upload(bookId, file);
 	}
 	
 }
