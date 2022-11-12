@@ -9,6 +9,14 @@
     </select>
   </div>
 
+  <div class="col-2">
+    <label class="form-label">Book</label>
+    <select class="form-select">
+      <option value="0">All Book</option>
+      <option *ngFor="let book of books" [value]="book.id">{{book.title}}</option>
+    </select>
+  </div>
+
   <div class="col-4">
     <label class="form-label">Keyword</label>
     <input formControlName="keyword" type="text" class="form-control" placeholder="Search Keyword">
@@ -30,7 +38,7 @@
       <th>Lesson</th>
       <th>Word</th>
       <th>Phonetic</th>
-      <th></th>
+      <th>Definitions</th>
     </tr>
   </thead>
 
@@ -41,7 +49,7 @@
       <td>{{item.lesson.title}}</td>
       <td>{{item.word}}</td>
       <td>{{item.phonetic}}</td>
-      <td></td>
+      <td>{{joinArray(item.definition)}}</td>
     </tr>
   </tbody>
 </table>

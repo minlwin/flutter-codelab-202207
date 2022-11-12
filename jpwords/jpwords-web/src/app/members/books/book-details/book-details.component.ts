@@ -81,6 +81,10 @@ export class BookDetailsComponent implements OnInit {
     })
   }
 
+  selectLesson(lesson:any) {
+    this.loadLessons(lesson)
+  }
+
   private loadBookData(id:any) {
     this.bookService.findById(id).subscribe(result => {
       this.book = result
