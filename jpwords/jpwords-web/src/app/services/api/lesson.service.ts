@@ -17,11 +17,20 @@ export class LessonService {
     return this.http.get<any>(`${API}/${id}`)
   }
 
-  create(form:any) {
+  save(form:any) {
+    const {id, ... dto} = form
+    if(id == 0) {
+      return this.create(dto)
+    }
+
+    return this.update(id, dto)
+  }
+
+  private create(form:any) {
     return this.http.post(API, form)
   }
 
-  update(id:number, form:any) {
+  private update(id:number, form:any) {
     return this.http.put(`${API}/${id}`, form)
   }
 

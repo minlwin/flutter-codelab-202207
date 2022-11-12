@@ -11,6 +11,8 @@ import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { BookDetailsComponent } from './books/book-details/book-details.component';
 import { ServicesModule } from '../services/services.module';
 import { AccountEditComponent } from './accounts/account-edit/account-edit.component';
+import { LessonEditComponent } from './books/book-details/lesson-edit/lesson-edit.component';
+import { WordEditComponent } from './books/book-details/word-edit/word-edit.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { AccountEditComponent } from './accounts/account-edit/account-edit.compo
     AccountsComponent,
     BookEditComponent,
     BookDetailsComponent,
-    AccountEditComponent
+    AccountEditComponent,
+    LessonEditComponent,
+    WordEditComponent
   ],
   imports: [
     CommonModule,

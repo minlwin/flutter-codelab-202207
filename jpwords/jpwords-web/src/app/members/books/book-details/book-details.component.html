@@ -1,11 +1,20 @@
-<h3><i class="bi bi-book"></i> {{dto.level}} - {{dto.title}}</h3>
+<h3><i class="bi bi-book"></i> {{book.level}} - {{book.title}}</h3>
 
-<p>{{dto.description}}</p>
+<p>{{book.description}}</p>
 
 <div class="mb-4">
-  <a href="#" class="btn btn-outline-primary">
+  <a (click)="editBook()" class="btn btn-outline-danger me-2">
     <i class="bi bi-pencil"></i> Edit Book Information
   </a>
+
+  <a class="btn btn-outline-primary me-2">
+    <i class="bi bi-tags"></i> Upload Lessons
+  </a>
+
+  <a class="btn btn-outline-success me-2">
+    <i class="bi bi-bookmarks"></i> Upload Words
+  </a>
+
 </div>
 
 <div class="row">
@@ -14,13 +23,28 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5><i class="bi bi-tags"></i> Lessons</h5>
-        <a class="btn btn-link">
+        <a (click)="editLesson(null)" class="btn btn-link">
           <i class="bi bi-plus-lg"></i>
         </a>
       </div>
 
       <div class="card-body">
 
+        <div *ngIf="lessons.length == 0" class="alert alert-info">
+          There is no lessons. Please create lesson for this book.
+        </div>
+
+        <div *ngIf="lessons.length > 0" class="list-group list-group-flush">
+          <div *ngFor="let item of lessons" class="list-group-item">
+            <div class="d-flex justify-content-between align-items-center">
+              <span>{{item.title}}</span>
+              <a (click)="editLesson(item)" class="btn btn-link">
+                <i class="bi bi-pencil"></i>
+              </a>
+            </div>
+            <span style="margin-top: -0.5em;">{{item.description}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,15 +53,23 @@
 
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5><i class="bi bi-tag"></i> Target Lesson</h5>
-        <a class="btn btn-link">
+        <h5><i class="bi bi-bookmarks"></i> Words for Lesson</h5>
+        <a (click)="editWord(null)" class="btn btn-link">
           <i class="bi bi-plus-lg"></i>
         </a>
       </div>
 
       <div class="card-body">
-
+        <div *ngIf="noTargetLesson" class="alert alert-info">
+          Please select lesson to manage words for lesson.
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-book-edit [dto]="book" (saveData)="saveBook($event)"></app-book-edit>
+
+<app-lesson-edit [dto]="targetLesson" (saveAction)="saveLesson($event)"></app-lesson-edit>
+
+<app-word-edit [dto]="targetWord" (saveAction)="saveWord($event)"></app-word-edit>

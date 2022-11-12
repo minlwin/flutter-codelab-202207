@@ -20,3 +20,30 @@
     </button>
   </div>
 </form>
+
+<table *ngIf="list.length > 0" class="table table-striped">
+
+  <thead>
+    <tr>
+      <th>Level</th>
+      <th>Book</th>
+      <th>Lesson</th>
+      <th>Word</th>
+      <th>Phonetic</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of list" class="align-middle">
+      <td>{{item.lesson.book.level}}</td>
+      <td>{{item.lesson.book.title}}</td>
+      <td>{{item.lesson.title}}</td>
+      <td>{{item.word}}</td>
+      <td>{{item.phonetic}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<app-no-data dataName="Word" *ngIf="list.length == 0"></app-no-data>

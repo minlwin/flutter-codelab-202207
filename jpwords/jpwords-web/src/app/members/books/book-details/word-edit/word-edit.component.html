@@ -1,0 +1,46 @@
+<div class="modal fade" id="wordEditModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5>Edit Word</h5>
+    </div>
+
+    <form [formGroup]="form" class="modal-body">
+      <div class="mb-3">
+        <label class="form-label">Word</label>
+        <input formControlName="word" placeholder="Enter Word" type="text" class="form-control" >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Phonetic</label>
+        <input formControlName="phonetic" placeholder="Enter Phonetic" type="text" class="form-control" >
+      </div>
+
+      <div>
+        <label class="form-label">Description</label>
+        <div *ngFor="let item of description.controls; index as i" class="row">
+          <div class="col">
+            <input type="text" [formControlName]="i" class="form-control">
+          </div>
+          <div class="col-auto">
+            <a class="btn btn-link" (click)="removeDescription(i)">
+              <i class="bi bi-trash"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline-primary" data-bs-dismiss="modal">
+        <i class="bi bi-x-lg"></i> Close
+      </button>
+      <button (click)="addDescription()" class="btn btn-outline-success">
+        <i class="bi bi-plus-lg"></i> Add Description
+      </button>
+      <button (click)="save()" class="btn btn-outline-danger">
+        <i class="bi bi-save"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
