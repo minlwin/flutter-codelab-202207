@@ -133,7 +133,7 @@ export class BookDetailsComponent implements OnInit {
 
   loadLessonPage(page:number) {
     const {...header} = PageInput
-    header.current = page
+    header.current = page.toString()
 
     this.lessonService.search({bookId: this.book.id}, header).subscribe(data => {
       const {result, page} = data
@@ -163,7 +163,7 @@ export class BookDetailsComponent implements OnInit {
 
   loadWordsPage(page:number) {
     const {...header} = PageInput
-    header.current = page
+    header.current = page.toString()
 
     if(null != this.targetLesson) {
       this.wordService.search({lessonId: this.targetLesson.id}, header).subscribe(data => {

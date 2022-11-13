@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
 
     this.form.get('level')?.valueChanges.subscribe(level => {
       this.books = []
-      this.bookService.search({level: level}, {}).subscribe(dto => {
+      this.bookService.search({level: level}, undefined).subscribe(dto => {
         const {result} = dto
         this.books = result
       })
@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
 
   searchPage(current:number) {
     const {... header} = PageInput
-    header.current = current
+    header.current = current.toString()
     this.service.search(this.form.value, header).subscribe(dto => {
       const {page, result} = dto
       this.pageInfo = page

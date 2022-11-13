@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { fixed_levels } from 'src/app/services';
+import { fixed_levels, PageInfo, PageInput } from 'src/app/services';
 import { BookService } from 'src/app/services/api/book.service';
 
 declare var bootstrap:any
@@ -17,6 +16,8 @@ export class BooksComponent implements OnInit {
   list:any[] = []
   modalDialog:any
 
+  pageInfo?:PageInfo
+
   constructor(builder:FormBuilder, private service:BookService) {
     this.form = builder.group({
       level: '',
@@ -30,8 +31,21 @@ export class BooksComponent implements OnInit {
   }
 
   search() {
-    this.service.search(this.form.value).subscribe(list => {
-      this.list = list
+    this.service.search(this.form.value, PageInput).subscribe(data => {
+      const {result, page} = data
+      this.list = result
+      this.pageInfo = page
+    })
+  }
+
+  searchPage(page:number) {
+    const {...headers} = PageInput
+    headers.current = page.toString()
+
+    this.service.search(this.form.value, headers).subscribe(data => {
+      const {result, page} = data
+      this.list = result
+      this.pageInfo = page
     })
   }
 

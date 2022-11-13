@@ -41,7 +41,7 @@ export class AccountsComponent implements OnInit {
 
   searchPage(current:number) {
     const {... page} = PageInput
-    page.current = current
+    page.current = current.toString()
     this.service.search(this.form.value, page).subscribe(data => {
       const {page, result} = data
       this.list = result

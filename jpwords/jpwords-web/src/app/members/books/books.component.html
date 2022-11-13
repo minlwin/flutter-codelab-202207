@@ -53,4 +53,6 @@
   </tbody>
 </table>
 
+<app-page-navigator [pageInfo]="pageInfo" (pageClickAction)="searchPage($event)"></app-page-navigator>
+
 <app-book-edit (saveData)="save($event)"></app-book-edit>

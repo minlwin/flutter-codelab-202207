@@ -58,6 +58,8 @@
 
 </table>
 
+<app-page-navigator [pageInfo]="pageInfo" (pageClickAction)="searchPage($event)"></app-page-navigator>
+
 <app-no-data dataName="Book" *ngIf="list.length == 0"></app-no-data>
 
 <app-account-edit [account]="target" (dto)="save($event)"></app-account-edit>

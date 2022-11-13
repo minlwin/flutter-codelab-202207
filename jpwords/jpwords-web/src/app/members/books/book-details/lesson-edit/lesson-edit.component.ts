@@ -12,7 +12,7 @@ export class LessonEditComponent implements OnInit {
   form:FormGroup
 
   @Output("saveAction")
-  emitter = new EventEmitter<any>
+  emitter = new EventEmitter
 
   @Input()
   set dto(data:any) {

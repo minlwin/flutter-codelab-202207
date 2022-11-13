@@ -1,3 +1,4 @@
+import { ɵsetCurrentInjector } from "@angular/core"
 import { FormArray, ValidatorFn } from "@angular/forms"
 
 export const fixed_levels = [
@@ -24,6 +25,6 @@ export interface ListPagerResult {
 }
 
 export const PageInput = {
-  current: 0,
-  sze: 10
+  current: '0',
+  size: '5',
 }

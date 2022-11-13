@@ -1,0 +1,15 @@
+<ul class="pagination" *ngIf="pageCount > 1">
+
+  <li class="page-item" >
+    <a class="page-link" (click)="moveFirst()" [class.disabled]="!showFirst">&laquo;</a>
+  </li>
+
+  <li class="page-item" *ngFor="let page of pageList" [class.active]="page == current">
+    <a (click)="clickLink(page)" class="page-link">{{page + 1}}</a>
+  </li>
+
+  <li class="page-item" >
+    <a class="page-link" (click)="moveLast()" [class.disabled]="!showLast">&raquo;</a>
+  </li>
+
+</ul>

@@ -54,4 +54,6 @@
   </tbody>
 </table>
 
+<app-page-navigator [pageInfo]="pageInfo" (pageClickAction)="searchPage($event)"></app-page-navigator>
+
 <app-no-data dataName="Word" *ngIf="list.length == 0"></app-no-data>

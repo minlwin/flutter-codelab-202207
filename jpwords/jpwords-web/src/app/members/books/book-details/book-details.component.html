@@ -34,7 +34,7 @@
           There is no lessons. Please create lesson for this book.
         </div>
 
-        <div *ngIf="lessons.length > 0" class="list-group list-group-flush">
+        <div *ngIf="lessons.length > 0" class="list-group list-group-flush mb-4">
           <div *ngFor="let item of lessons" class="list-group-item">
             <div class="d-flex justify-content-between align-items-center">
               <span>{{item.title}}</span>
@@ -45,6 +45,9 @@
             <span style="margin-top: -0.5em;">{{item.description}}</span>
           </div>
         </div>
+
+        <app-page-navigator [pageInfo]="lessonPage" (pageClickAction)="loadLessonPage($event)"></app-page-navigator>
+
       </div>
     </div>
   </div>
@@ -100,6 +103,8 @@
             </tr>
           </tbody>
         </table>
+
+        <app-page-navigator [pageInfo]="wordsPage" (pageClickAction)="loadWordsPage($event)"></app-page-navigator>
       </div>
     </div>
   </div>
