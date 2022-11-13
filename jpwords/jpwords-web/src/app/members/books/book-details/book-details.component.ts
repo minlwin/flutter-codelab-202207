@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PageInfo, PageInput } from 'src/app/services';
 import { BookService } from 'src/app/services/api/book.service';
 import { LessonService } from 'src/app/services/api/lesson.service';
 import { WordService } from 'src/app/services/api/word.service';
@@ -16,9 +17,11 @@ export class BookDetailsComponent implements OnInit {
   book:any
 
   lessons:any[] = []
+  lessonPage?:PageInfo
   targetLesson:any
 
   words:any[] = []
+  wordsPage?:PageInfo
   targetWord:any
   lessonForWord:any
 
@@ -114,8 +117,10 @@ export class BookDetailsComponent implements OnInit {
       this.targetLesson = lesson
     }
 
-    this.lessonService.search({bookId: this.book.id}).subscribe(result => {
+    this.lessonService.search({bookId: this.book.id}, PageInput).subscribe(data => {
+      const {result, page} = data
       this.lessons = result
+      this.lessonPage = page
 
       if(null == this.targetLesson && result.length > 0) {
         this.targetLesson = result[0]
@@ -126,13 +131,45 @@ export class BookDetailsComponent implements OnInit {
     })
   }
 
+  loadLessonPage(page:number) {
+    const {...header} = PageInput
+    header.current = page
+
+    this.lessonService.search({bookId: this.book.id}, header).subscribe(data => {
+      const {result, page} = data
+      this.lessons = result
+      this.lessonPage = page
+
+      if(null == this.targetLesson && result.length > 0) {
+        this.targetLesson = result[0]
+        this.lessonForWord = this.targetLesson
+      }
+      this.loadWords()
+    })
+  }
+
   private loadWords() {
     this.targetWord = null
     this.words = []
 
     if(null != this.targetLesson) {
-      this.wordService.search({lessonId: this.targetLesson.id}).subscribe(result => {
+      this.wordService.search({lessonId: this.targetLesson.id}, PageInput).subscribe(data => {
+        const {result, page} = data
         this.words = result
+        this.wordsPage = page
+      })
+    }
+  }
+
+  loadWordsPage(page:number) {
+    const {...header} = PageInput
+    header.current = page
+
+    if(null != this.targetLesson) {
+      this.wordService.search({lessonId: this.targetLesson.id}, header).subscribe(data => {
+        const {result, page} = data
+        this.words = result
+        this.wordsPage = page
       })
     }
   }

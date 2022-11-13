@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { ListPagerResult } from "..";
 
 const API = `${environment.baseApi}/account`
 
@@ -9,8 +10,8 @@ export class AccountService {
 
   constructor(private http:HttpClient) {}
 
-  search(form:any) {
-    return this.http.get<any[]>(API, {params: form})
+  search(form:any, pageInput:any) {
+    return this.http.get<ListPagerResult>(API, {params: form, headers: pageInput})
   }
 
   findById(id:number) {

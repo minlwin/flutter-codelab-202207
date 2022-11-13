@@ -5,12 +5,14 @@ import { SecurityTokenInterceptor } from './interceptors/security.token.intercep
 import { WelcomeComponent } from './widgets/welcome/welcome.component';
 import { ApiErrorInterceptor } from './interceptors/api.error.interceptor';
 import { NoDataComponent } from './widgets/no-data/no-data.component';
+import { PagerComponent } from './widgets/pager/pager.component';
 
 
 @NgModule({
   declarations: [
     WelcomeComponent,
-    NoDataComponent
+    NoDataComponent,
+    PagerComponent
   ],
   exports: [
     WelcomeComponent,

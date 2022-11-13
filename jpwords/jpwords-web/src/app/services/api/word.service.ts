@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { ListPagerResult } from "..";
 
 const API = `${environment.baseApi}/word`
 
@@ -9,12 +10,12 @@ export class WordService {
 
   constructor(private http:HttpClient) {}
 
-  search(form:any) {
+  search(form:any, pageInput:any) {
 
     const {level, ... search} = form
     const searchParam = level ? form : search
 
-    return this.http.get<any[]>(API, {params: searchParam})
+    return this.http.get<ListPagerResult>(API, {params: searchParam, headers: pageInput})
   }
 
   findBiId(id:number) {

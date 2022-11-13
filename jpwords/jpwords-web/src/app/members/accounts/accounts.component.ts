@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { PageInfo, PageInput } from 'src/app/services';
 import { AccountService } from 'src/app/services/api/account.service';
 
 declare var bootstrap:any
@@ -16,6 +17,7 @@ export class AccountsComponent implements OnInit {
   modalDialog:any
 
   target:any
+  pageInfo?:PageInfo
 
   constructor(builder:FormBuilder, private service:AccountService) {
     this.form = builder.group({
@@ -30,7 +32,21 @@ export class AccountsComponent implements OnInit {
   }
 
   search() {
-    this.service.search(this.form.value).subscribe(result => this.list = result)
+    this.service.search(this.form.value, PageInput).subscribe(data => {
+      const {page, result} = data
+      this.list = result
+      this.pageInfo = page
+    })
+  }
+
+  searchPage(current:number) {
+    const {... page} = PageInput
+    page.current = current
+    this.service.search(this.form.value, page).subscribe(data => {
+      const {page, result} = data
+      this.list = result
+      this.pageInfo = page
+    })
   }
 
   addNew() {

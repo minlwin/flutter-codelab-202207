@@ -11,3 +11,19 @@ export const notEmptyArray:ValidatorFn = control => {
   }
   return null
 }
+
+export interface PageInfo {
+  readonly total:number
+  readonly size:number
+  readonly current:number
+}
+
+export interface ListPagerResult {
+  readonly result:any[]
+  readonly page:PageInfo
+}
+
+export const PageInput = {
+  current: 0,
+  sze: 10
+}
