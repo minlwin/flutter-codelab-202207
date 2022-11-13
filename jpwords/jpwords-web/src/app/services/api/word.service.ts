@@ -30,6 +30,12 @@ export class WordService {
     return this.update(id, dto)
   }
 
+  upload(lessonId:number, file:File) {
+    const form = new FormData
+    form.append('file', file)
+    return this.http.post<any[]>(`${API}/upload/${lessonId}`, form)
+  }
+
   private create(form:any) {
     return this.http.post(API, form)
   }

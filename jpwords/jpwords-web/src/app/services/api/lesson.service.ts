@@ -26,6 +26,12 @@ export class LessonService {
     return this.update(id, dto)
   }
 
+  upload(bookId:number, file:File) {
+    const form = new FormData
+    form.append('file', file)
+    return this.http.post<any[]>(`${API}/upload/${bookId}`, form)
+  }
+
   private create(form:any) {
     return this.http.post(API, form)
   }

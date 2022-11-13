@@ -7,11 +7,11 @@
     <i class="bi bi-pencil"></i> Edit Book Information
   </a>
 
-  <a class="btn btn-outline-primary me-2">
+  <a (click)="lessonFile.click()" class="btn btn-outline-primary me-2">
     <i class="bi bi-tags"></i> Upload Lessons
   </a>
 
-  <a class="btn btn-outline-success me-2">
+  <a (click)="wordFile.click()" class="btn btn-outline-success me-2">
     <i class="bi bi-bookmarks"></i> Upload Words
   </a>
 
@@ -110,3 +110,8 @@
 <app-lesson-edit [dto]="targetLesson" (saveAction)="saveLesson($event)"></app-lesson-edit>
 
 <app-word-edit [dto]="targetWord" (saveAction)="saveWord($event)"></app-word-edit>
+
+<form class="d-none">
+  <input type="file" #lessonFile (change)="uploadLesson(lessonFile.files)" >
+  <input type="file" #wordFile (change)="uploadWord(wordFile.files)" >
+</form>

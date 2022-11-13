@@ -82,7 +82,24 @@ export class BookDetailsComponent implements OnInit {
   }
 
   selectLesson(lesson:any) {
+    this.lessonForWord = lesson
     this.loadLessons(lesson)
+  }
+
+  uploadLesson(files:FileList | null) {
+    if(files && files.length > 0) {
+      this.lessonService.upload(this.book.id, files[0]).subscribe(result => {
+        this.lessons = result
+      })
+    }
+  }
+
+  uploadWord(files:FileList | null) {
+    if(files && files.length > 0) {
+      this.wordService.upload(this.lessonForWord.id, files[0]).subscribe(result => {
+        this.words = result
+      })
+    }
   }
 
   private loadBookData(id:any) {
