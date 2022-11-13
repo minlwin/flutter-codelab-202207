@@ -2,7 +2,6 @@ package com.jdc.jpwords.model.service;
 
 import static com.jdc.jpwords.model.SpecificationUtils.spec;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.jpwords.model.JpwordsNotFoundException;
 import com.jdc.jpwords.model.dto.form.AccountForm;
+import com.jdc.jpwords.model.dto.form.PageInput;
 import com.jdc.jpwords.model.dto.result.AccountResult;
+import com.jdc.jpwords.model.dto.result.ListPagerResult;
+import com.jdc.jpwords.model.dto.result.PageInfo;
 import com.jdc.jpwords.model.entity.Account;
 import com.jdc.jpwords.model.entity.Account.Role;
 import com.jdc.jpwords.model.repo.AccountRepo;
@@ -52,8 +54,19 @@ public class AccountService {
 				.orElseThrow(() -> new JpwordsNotFoundException(Account.class, id));
 	}
 	
-	public List<AccountResult> search(Optional<Role> role, Optional<String> name) {		
-		return repo.findAll(spec(role, this::byRole).and(spec(name, this::byName))).stream().map(AccountResult::from).toList();
+	public ListPagerResult<AccountResult> search(Optional<Role> role, Optional<String> name, PageInput page) {	
+		
+		// Search Criteria
+		var criteria = spec(role, this::byRole).and(spec(name, this::byName));
+		
+		// Search Result
+		var list = repo.findAll(criteria, page.get())
+				.stream()
+				.map(AccountResult::from).toList();
+		
+		var count = repo.count(criteria);
+		
+		return new ListPagerResult<>(list, PageInfo.from(page, count));
 	}
 	
 	private Specification<Account> byRole(Role role) {
@@ -65,5 +78,6 @@ public class AccountService {
 		return (root, query, builder) -> 
 			builder.like(builder.lower(root.get("name")), name.toLowerCase().concat("%"));
 	}
+
 
 }

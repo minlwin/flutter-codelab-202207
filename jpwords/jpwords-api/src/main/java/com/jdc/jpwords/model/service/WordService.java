@@ -2,7 +2,6 @@ package com.jdc.jpwords.model.service;
 
 import static com.jdc.jpwords.model.SpecificationUtils.spec;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.jpwords.model.JpwordsNotFoundException;
+import com.jdc.jpwords.model.dto.form.PageInput;
 import com.jdc.jpwords.model.dto.form.WordForm;
+import com.jdc.jpwords.model.dto.result.ListPagerResult;
+import com.jdc.jpwords.model.dto.result.PageInfo;
 import com.jdc.jpwords.model.dto.result.WordDetailsResult;
 import com.jdc.jpwords.model.dto.result.WordResult;
 import com.jdc.jpwords.model.entity.Book.Level;
@@ -51,9 +53,16 @@ public class WordService {
 		return repo.findById(id).map(WordDetailsResult::from).orElseThrow(() -> new JpwordsNotFoundException(Words.class, id));
 	}
 
-	public List<WordResult> search(Optional<Level> level, Optional<Integer> bookId, Optional<Integer> lessonId, Optional<String> keyword) {
-		return repo.findAll(spec(level, this::byLevel).and(spec(bookId, this::byBookId).and(spec(lessonId, this::byLessonId).and(spec(keyword, this::byKeyword)))))
+	public ListPagerResult<WordResult> search(Optional<Level> level, Optional<Integer> bookId, Optional<Integer> lessonId, Optional<String> keyword, PageInput pageInput) {
+		
+		var criteria = spec(level, this::byLevel).and(spec(bookId, this::byBookId).and(spec(lessonId, this::byLessonId).and(spec(keyword, this::byKeyword))));
+		
+		var list = repo.findAll(criteria, pageInput.get())
 				.stream().map(WordResult::from).toList();
+		
+		var count = repo.count(criteria);
+		
+		return new ListPagerResult<>(list, PageInfo.from(pageInput, count));
 	}
 	
 	private Specification<Words> byLevel(Level level) {

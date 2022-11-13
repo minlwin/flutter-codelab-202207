@@ -2,7 +2,6 @@ package com.jdc.jpwords.model.service;
 
 import static com.jdc.jpwords.model.SpecificationUtils.spec;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jdc.jpwords.model.JpwordsNotFoundException;
+import com.jdc.jpwords.model.dto.form.PageInput;
 import com.jdc.jpwords.model.dto.form.ReviewForm;
+import com.jdc.jpwords.model.dto.result.ListPagerResult;
+import com.jdc.jpwords.model.dto.result.PageInfo;
 import com.jdc.jpwords.model.dto.result.ReviewResult;
 import com.jdc.jpwords.model.entity.Review;
 import com.jdc.jpwords.model.repo.AccountRepo;
@@ -47,10 +49,17 @@ public class ReviewService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ReviewResult> search(Optional<Long> wordId, Optional<Integer> lessonId, Optional<Integer> bookId,
-			Optional<Integer> accountId) {
-		return repo.findAll(spec(wordId, this::byWordId).and(spec(lessonId, this::byLessonId).and(spec(bookId, this::byBookId).and(spec(accountId, this::byAccountId)))))
+	public ListPagerResult<ReviewResult> search(Optional<Long> wordId, Optional<Integer> lessonId, Optional<Integer> bookId,
+			Optional<Integer> accountId, PageInput pageInput) {
+		
+		var criteria = spec(wordId, this::byWordId).and(spec(lessonId, this::byLessonId).and(spec(bookId, this::byBookId).and(spec(accountId, this::byAccountId))));
+		
+		var list = repo.findAll(criteria, pageInput.get())
 				.stream().map(ReviewResult::from).toList();
+		
+		var count = repo.count(criteria);
+		
+		return new ListPagerResult<>(list, PageInfo.from(pageInput, count));
 	}
 	
 	private Specification<Review> byWordId(long id) {

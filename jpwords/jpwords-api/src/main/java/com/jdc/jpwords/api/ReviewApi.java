@@ -1,6 +1,5 @@
 package com.jdc.jpwords.api;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdc.jpwords.model.JpwordsVaildationException;
+import com.jdc.jpwords.model.dto.form.PageInput;
 import com.jdc.jpwords.model.dto.form.ReviewForm;
+import com.jdc.jpwords.model.dto.result.ListPagerResult;
 import com.jdc.jpwords.model.dto.result.ReviewResult;
 import com.jdc.jpwords.model.service.ReviewService;
 
@@ -28,13 +30,14 @@ public class ReviewApi {
 	private ReviewService service;
 
 	@GetMapping
-	List<ReviewResult> search(
+	ListPagerResult<ReviewResult> search(
 			@RequestParam Optional<Long> wordId,
 			@RequestParam Optional<Integer> lessonId,
 			@RequestParam Optional<Integer> bookId,
-			@RequestParam Optional<Integer> accountId
-			) {
-		return service.search(wordId, lessonId, bookId, accountId);
+			@RequestParam Optional<Integer> accountId,
+			@RequestHeader(required = false) Integer current,
+			@RequestHeader(required = false) Integer size) {
+		return service.search(wordId, lessonId, bookId, accountId, new PageInput(current, size));
 	}
 	
 	@PostMapping
