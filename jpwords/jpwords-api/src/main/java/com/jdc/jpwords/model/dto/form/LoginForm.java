@@ -1,6 +1,6 @@
 package com.jdc.jpwords.model.dto.form;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public record LoginForm(
 		@NotBlank(message = "Please enter email.")

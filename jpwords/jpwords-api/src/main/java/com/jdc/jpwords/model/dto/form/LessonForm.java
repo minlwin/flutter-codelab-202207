@@ -1,9 +1,9 @@
 package com.jdc.jpwords.model.dto.form;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
 import com.jdc.jpwords.model.entity.Lesson;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 public record LessonForm(
 		@Min(value = 1, message = "Please select book of lesson.")

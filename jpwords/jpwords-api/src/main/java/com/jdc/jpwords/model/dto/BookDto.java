@@ -1,10 +1,10 @@
 package com.jdc.jpwords.model.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.jdc.jpwords.model.entity.Book;
 import com.jdc.jpwords.model.entity.Book.Level;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record BookDto(
 		int id, 

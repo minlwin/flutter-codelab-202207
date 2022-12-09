@@ -1,11 +1,11 @@
 package com.jdc.jpwords.model.dto.form;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import com.jdc.jpwords.model.entity.Review;
 import com.jdc.jpwords.model.entity.Review.Vote;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record ReviewForm(
 		@Min(value = 1, message = "Please select word.")

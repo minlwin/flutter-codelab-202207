@@ -36,9 +36,9 @@ public class JpwordsApiSecurity {
 		return http
 				.cors().and().csrf().disable()
 				.authorizeHttpRequests()
-				.mvcMatchers("/security/login").permitAll()
-				.mvcMatchers(HttpMethod.POST, "/account").hasAnyAuthority("Admin")
-				.mvcMatchers(HttpMethod.PUT, "/account").hasAnyAuthority("Admin")
+				.requestMatchers("/security/login").permitAll()
+				.requestMatchers(HttpMethod.POST, "/account").hasAnyAuthority("Admin")
+				.requestMatchers(HttpMethod.PUT, "/account").hasAnyAuthority("Admin")
 				.anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(appTokenFilter, UsernamePasswordAuthenticationFilter.class)

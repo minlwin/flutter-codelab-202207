@@ -2,9 +2,9 @@ package com.jdc.jpwords.model.dto.result;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import com.jdc.jpwords.model.entity.Words;
+
+import jakarta.validation.constraints.NotNull;
 
 public record WordResult(
 		long id,
